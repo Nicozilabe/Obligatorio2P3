@@ -49,12 +49,15 @@ namespace API.Controllers
             }
             catch (DatosInvalidosException ex)
             {
-                return BadRequest("Error datos login.");
+                return BadRequest(ex.Message);
             }
-            
+            catch(PermisosException ex)
+            {
+                return Forbid();
+            }      
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An unexpected error occurred while logging in." });
+                return StatusCode(StatusCodes.Status500InternalServerError, "ha ocurrido un error inesperado.");
             }
         }
     }
