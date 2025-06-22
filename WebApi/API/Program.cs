@@ -42,17 +42,12 @@ namespace API
 
             //Casos de uso que miedo.
             builder.Services.AddScoped<ILogin, Login>();
-            builder.Services.AddScoped<IRegistroEmpleado, RegistroEmpleado>();
-            builder.Services.AddScoped<IListarEmpleados, ListarEmpleados>();
-            builder.Services.AddScoped<IObtenerEmpleado, ObtenerEmpleado>();
-            builder.Services.AddScoped<IEditarEmpleado, EditarEmpleado>();
-            builder.Services.AddScoped<IBajaEmpleado, BajaEmpleado>();
+
             builder.Services.AddScoped<IObtenerAgencias, ObtenerAgencias>();
             builder.Services.AddScoped<IObtenerCiudades, ObtenerCiudades>();
-            builder.Services.AddScoped<IAltaEnvio, AltaEnvio>();
+
             builder.Services.AddScoped<IObtenerEnvio, ObtenerEnvio>();
-            builder.Services.AddScoped<IFinalizarEnvio, FinalizarEnvio>();
-            builder.Services.AddScoped<IComentarioEnvio, ComentariosEnvios>();
+
 
 
             //DB
