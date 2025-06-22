@@ -1,0 +1,85 @@
+﻿@model IEnumerable<CasosDeUso.DTOs.Envio.EnvioLigthDTO>
+
+@{
+    ViewData["Title"] = "Activos";
+}
+
+<h1>Activos</h1>
+
+<p>
+    <a asp-action="AltaEnvio">Registrar Envío</a>
+</p>
+
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Peso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TipoEnvio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstadoEnvio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmailCliente)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Destino)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaRegistroEnvio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tracking)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Peso)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoEnvio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstadoEnvio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailCliente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Destino)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaRegistroEnvio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tracking)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Finalizar", "FinalizarEnvio", new { id = item.Id }) |
+                        @Html.ActionLink("Comentarios", "AgregarComentario", new { id=item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+<h2>
+    @ViewBag.ErrorMessage
+</h2>

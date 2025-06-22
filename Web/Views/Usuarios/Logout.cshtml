@@ -1,0 +1,15 @@
+﻿@model CasosDeUso.DTOs.Usuarios.LoginDTO
+
+@{
+    ViewData["Title"] = "Logout";
+}
+
+<h1>Logout</h1>
+
+<h3>Esta seguro de que quiere cerrar sesion?</h3>
+<div>
+    <form asp-action="Logout">
+        <input type="submit" value="Logout" class="btn btn-danger" /> |
+        <a asp-controller="Home" asp-action="Index">Volver al Home</a>
+    </form>
+</div>

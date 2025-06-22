@@ -1,0 +1,105 @@
+﻿@model CasosDeUso.DTOs.Envio.EnvioDTO
+
+@{
+    ViewData["Title"] = "finalizarEnvio";
+}
+
+<h1>finalizarEnvio</h1>
+
+@if(Model != null)
+{
+    <h4>EnvioDTO</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="finalizarEnvio">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" readonly class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tracking" class="control-label"></label>
+                    <input asp-for="Tracking" readonly class="form-control" />
+                    <span asp-validation-for="Tracking" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmailCliente" class="control-label"></label>
+                    <input asp-for="EmailCliente" readonly class="form-control" />
+                    <span asp-validation-for="EmailCliente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Peso" class="control-label"></label>
+                    <input asp-for="Peso" readonly class="form-control" />
+                    <span asp-validation-for="Peso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EstadoEnvio" class="control-label"></label>
+                    <input asp-for="EstadoEnvio" readonly class="form-control" />
+                    <span asp-validation-for="EstadoEnvio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FechaRegistroEnvio" class="control-label"></label>
+                    <input asp-for="FechaRegistroEnvio" readonly class="form-control" />
+                    <span asp-validation-for="FechaRegistroEnvio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TipoEnvio" class="control-label"></label>
+                    <input asp-for="TipoEnvio" readonly class="form-control" />
+                    <span asp-validation-for="TipoEnvio" class="text-danger"></span>
+                </div>
+                <p>@Model.EmpleadoResponable</p>
+                @if (Model.TipoEnvio == "EnvioComun")
+                {
+                    <div class="form-group">
+                        <label asp-for="Agencia" class="control-label"></label>
+                        <input asp-for="Agencia" readonly class="form-control" />
+                        <span asp-validation-for="Agencia" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label asp-for="direccion" class="control-label"></label>
+                        <input asp-for="direccion" readonly class="form-control" />
+                        <span asp-validation-for="direccion" class="text-danger"></span>
+                    </div>
+
+                    @if(Model.FechaEntrega != null)
+                    {
+                        if (Model.EnvioEficiente)
+                        {
+                            <h3>El envío fue eficiente</h3>
+                        }
+                        else
+                        {
+                            <h3>El envío no fue eficiente</h3>
+                        }
+                    }
+                   
+                }
+                <div class="form-group">
+                    <label asp-for="FechaEntrega" class="control-label"></label>
+                    <input asp-for="FechaEntrega" required min="@Model.FechaRegistroEnvio.ToString("yyyy-MM-ddTHH:mm")" max="@(DateTime.Now.ToString("yyyy-MM-ddTHH:mm"))" class="form-control" />
+                    <span asp-validation-for="FechaEntrega" class="text-danger"></span>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+            </form>
+        </div>
+    </div>
+
+}
+<h2>
+    @ViewBag.ErrorMessage
+</h2>
+
+
+<div>
+    <a asp-action="Activos">Volver a la Lista.</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
