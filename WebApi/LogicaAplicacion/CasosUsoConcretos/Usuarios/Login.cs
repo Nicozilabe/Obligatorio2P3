@@ -34,10 +34,7 @@ namespace LogicaAplicacion.CasosUsoConcretos.Usuarios
                 }
 
             }
-            if (ret == null)
-            {
-                throw new DatosInvalidosException("Email o Contraseña no válidos");
-            }
+     
 
             return ret;
         }
