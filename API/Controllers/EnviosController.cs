@@ -19,7 +19,7 @@ namespace API.Controllers
             CUObtenerEnvio = cuObtenerEnvio;
         }
 
-        [HttpGet("{tracking}", Name = "RutaBuscarPorTracking")]
+        [HttpGet("RutaBuscarPorTracking/{tracking}")]
         public IActionResult Get(int tracking)
         {
             if (tracking <= 0)
