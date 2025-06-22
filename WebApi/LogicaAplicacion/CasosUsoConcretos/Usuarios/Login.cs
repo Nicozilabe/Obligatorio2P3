@@ -26,14 +26,10 @@ namespace LogicaAplicacion.CasosUsoConcretos.Usuarios
             {
                 if (buscado.Password.Password == datos.Pass)
                 {
-                    if (buscado is Empleado || buscado is Administrador)
-                    {
+                    
                         ret = MappersUsuario.ToUsuarioDTO(buscado);
-                    }
-                    else
-                    {
-                        throw new PermisosException("El usuario no cuenta con los permisos para iniciar sesión.");
-                    }
+                    
+                    
 
                 }
 
