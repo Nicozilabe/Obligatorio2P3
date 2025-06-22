@@ -5,7 +5,12 @@ using LogicaAccesoADatos.Repos;
 using LogicaAplicacion.CasosUsoConcretos.Envios;
 using LogicaAplicacion.CasosUsoConcretos.Usuarios;
 using LogicaNegocio.InterfacesRepositorio;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Security.Claims;
+using System.Text;
 
 namespace API
 {
@@ -59,11 +64,71 @@ namespace API
             );
 
 
+            //CAMBIAMOS LO ANTERIOR POR ESTO PARA PODER AUTENTICAR CON JWT EN SWAGGER:
+
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+            });
+
+            //////// FIN CÓDIGO PARA JWT EN SWAGGER
+
+
+
+            //////////////// INICIO CÓDIGO PARA CONFIGURAR USO DE JWT
+
+            var claveSecreta = "ZWRpw6fDo28gZW0gY29tcHV0YWRvcmE=";
+
+            builder.Services.AddAuthentication(aut =>
+            {
+                aut.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                aut.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(aut =>
+            {
+                aut.RequireHttpsMetadata = false;
+                aut.SaveToken = true;
+                aut.TokenValidationParameters = new TokenValidationParameters
+                {
+                    RoleClaimType = ClaimTypes.Role,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(claveSecreta)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            //////////////// FIN CÓDIGO PARA CONFIGURAR USO DE JWT
+            ///
+
+
+
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (true)
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
