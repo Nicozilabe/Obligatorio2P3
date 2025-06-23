@@ -49,7 +49,7 @@ namespace LogicaAccesoADatos.Repos
 
         public Usuario FindByEmail(string email)
         {
-            Usuario? buscado = Context.Usuarios.AsEnumerable().Where(Usuario => Usuario.Email.Email == email).SingleOrDefault();
+            Usuario? buscado = Context.Usuarios.AsNoTracking().AsEnumerable().Where(Usuario => Usuario.Email.Email == email).SingleOrDefault();
             return buscado;
         }
 
