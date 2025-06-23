@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WebMVC.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace CasosDeUso.DTOs.Usuarios
+namespace WebMVC.DTOs.Usuarios
 {
     public class LoginDTO : IValidable
     {

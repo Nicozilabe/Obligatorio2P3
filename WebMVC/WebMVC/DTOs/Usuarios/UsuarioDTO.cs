@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebMVC.Interfaces;
 
-namespace CasosDeUso.DTOs.Usuarios
+namespace WebMVC.DTOs.Usuarios
 {
     public class UsuarioDTO : IValidable
     {

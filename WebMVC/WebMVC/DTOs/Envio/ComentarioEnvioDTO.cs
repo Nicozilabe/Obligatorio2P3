@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using WebMVC.Interfaces;
 
-namespace CasosDeUso.DTOs.Envio
+namespace WebMVC.DTOs.Envio
 {
     public class ComentarioEnvioDTO:IValidable
     {

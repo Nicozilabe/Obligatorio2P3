@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebMVC.Interfaces;
 
-namespace CasosDeUso.DTOs.Envio
+namespace WebMVC.DTOs.Envio
 {
     public class EnvioDTO : IValidable
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CasosDeUso.DTOs.Usuarios
+namespace WebMVC.DTOs.Usuarios
 {
     public class EmpleadoSeguroDTO
     {

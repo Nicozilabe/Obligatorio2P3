@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WebMVC.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace CasosDeUso.DTOs.Envio
+namespace WebMVC.DTOs.Envio
 {
     public class DireccionDTO : IValidable
     {
