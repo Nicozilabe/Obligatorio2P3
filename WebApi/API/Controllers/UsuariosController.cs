@@ -66,7 +66,7 @@ namespace API.Controllers
 
         [HttpPut("ChngPass")]
         //[Authorize(Roles ="Cliente")]
-        public ActionResult CambiarContrasena(CambioContrasenaDTO datos)
+        public ActionResult CambiarContrasena([FromBody]CambioContrasenaDTO datos)
         {
             if (datos == null)
             {
