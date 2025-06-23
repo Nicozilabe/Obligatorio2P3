@@ -41,14 +41,11 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
                 throw new DatosInvalidosException("El id no puede ser menor o igual a cero");
             }
             var envio = repoEnvios.FindById(id);
-            if (envio == null)
-            {
+          
                 throw new DatosInvalidosException("El envío no existe");
-            }
-            else
-            {
+            
                 return MapperEnvio.ToDTO(envio);
-            }
+            
         }
 
         public EnvioDTO getByTracking(int tracking)
