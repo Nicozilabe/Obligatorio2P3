@@ -33,10 +33,15 @@ namespace WebMVC.Controllers
 
                 if (respuesta.IsSuccessStatusCode)
                 {
-                    LoginDTO us = JsonConvert.DeserializeObject<LoginDTO>(body);
-                    HttpContext.Session.SetString("logEmail", us.Email);
-                    HttpContext.Session.SetString("LogeadoPass", us.Pass);
+                    DatosUsuariosDTO us = JsonConvert.DeserializeObject<DatosUsuariosDTO>(body);
+                    HttpContext.Session.SetString("LogToken", us.Token);
+                    HttpContext.Session.SetString("LogEmail", us.Email);
+                    HttpContext.Session.SetString("LogRol", us.Rol);
                     return RedirectToAction("Index", "Home");
+                }
+                else if ((int)respuesta.StatusCode == 403)
+                {
+                    ViewBag.Error = "Usted no esta autorizado para ingresar.";
                 }
                 else if((int)respuesta.StatusCode == 401)
                 {
@@ -58,6 +63,13 @@ namespace WebMVC.Controllers
         public ActionResult Logout()
         {
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfLogout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
     }
 }
