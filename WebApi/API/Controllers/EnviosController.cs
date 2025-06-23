@@ -58,6 +58,47 @@ namespace API.Controllers
                 }
                 return Ok(envios);
             }
+            catch (DatosInvalidosException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (PermisosException ex)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocurrió un error, intente nuevamente más tarde");
+            }
+        }
+
+        [HttpGet("RutaBuscarPorComentario")]
+        //[Authorize(Roles ="Cliente")]
+        public IActionResult GetByComentariol([FromQuery]FiltroComentarioDTO datos)
+        {
+            if (datos == null)
+            {
+                return BadRequest("El email no puede ser nulo o vacío");
+            }
+            
+            try
+            {
+                datos.Validar();
+                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnvio.getEnviosByComentario(datos);
+                if (envios == null || !envios.Any())
+                {
+                    return NotFound("No se encontraron envíos para el cliente con email: " + datos.Email + " y comentario " + datos.Comentario);
+                }
+                return Ok(envios);
+            }
+            catch (DatosInvalidosException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (PermisosException ex)
+            {
+                return Forbid();
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, "Ocurrió un error, intente nuevamente más tarde");
