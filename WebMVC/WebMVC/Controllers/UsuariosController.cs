@@ -65,15 +65,11 @@ namespace WebMVC.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Logout(int? logue)
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfLogout()
         {
-            if (HttpContext.Session.GetInt32("LogeadoId") == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             HttpContext.Session.Clear();
-            int? log = HttpContext.Session.GetInt32("LogeadoId");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
     }
 }
