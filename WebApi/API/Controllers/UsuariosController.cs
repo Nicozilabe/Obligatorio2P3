@@ -46,7 +46,7 @@ namespace API.Controllers
                 }
                 string token = ManejadorJWT.GenerarToken(user);
 
-                var contenido = new { user.Email, Rol = user.Rol, Token = token };
+                var contenido = new { Email = user.Email, Rol = user.Rol, Token = token };
 
                 return Ok(contenido);
             }
