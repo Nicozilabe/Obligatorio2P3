@@ -19,7 +19,7 @@ namespace API.Controllers
             CUObtenerEnvio = cuObtenerEnvio;
         }
 
-        [HttpGet("RutaBuscarPorTracking/{tracking}")]
+        [HttpGet("BuscarPorTracking/{tracking}")]
         public IActionResult Get(int tracking)
         {
             if (tracking <= 0)
@@ -41,7 +41,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("RutaBuscarPorCliente")]
+        [HttpGet("BuscarPorCliente")]
         //[Authorize(Roles ="Cliente")]
         public IActionResult GetByEmail([FromQuery]string Email)
         {
@@ -72,7 +72,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("RutaBuscarPorComentario")]
+        [HttpGet("BuscarPorComentario")]
         //[Authorize(Roles ="Cliente")]
         public IActionResult GetByComentariol([FromQuery]FiltroComentarioDTO datos)
         {
@@ -90,6 +90,37 @@ namespace API.Controllers
                     return NotFound("No se encontraron envíos para el cliente con email: " + datos.Email + " y comentario " + datos.Comentario);
                 }
                 return Ok(envios);
+            }
+            catch (DatosInvalidosException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (PermisosException ex)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocurrió un error, intente nuevamente más tarde");
+            }
+        }
+
+        [HttpGet("BuscarPorID/{id}")]
+        //[Authorize(Roles ="Cliente")]
+        public IActionResult GetByID(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("El id no puede ser menor o igual a cero");
+            }
+            try
+            {
+                EnvioDTO envio = CUObtenerEnvio.getByID(id);
+                if (envio == null)
+                {
+                    return NotFound("El envío con id=" + id + " no existe");
+                }
+                return Ok(envio);
             }
             catch (DatosInvalidosException ex)
             {
