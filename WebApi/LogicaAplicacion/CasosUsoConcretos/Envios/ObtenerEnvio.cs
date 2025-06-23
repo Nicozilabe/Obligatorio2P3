@@ -62,5 +62,16 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
             }
             return envio;
         }
+
+        public IEnumerable<EnvioLigthDTO> getEnviosByEmail(string email)
+        {
+            IEnumerable<EnvioLigthDTO> envios = MapperEnvio.ToListEnvioLigthDTO(repoEnvios.FindAllLightByEmailCliente(email));
+
+            if (envios == null || envios.Count() == 0)
+            {
+                throw new DatosInvalidosException("No se encontraron envios activos.");
+            }
+            return envios;
+        }
     }
 }
