@@ -81,7 +81,8 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
 
         public IEnumerable<EnvioLigthDTO> getEnviosByComentario(FiltroComentarioDTO datos)
         {
-            IEnumerable<EnvioLigthDTO> envios = MapperEnvio.ToListEnvioLigthDTO(repoEnvios.FindAllLightByComentario( datos));
+            datos.Validar();
+            IEnumerable<EnvioLigthDTO> envios = MapperEnvio.ToListEnvioLigthDTO(repoEnvios.FindAllLightByComentario(datos.Email, datos.Comentario));
 
             if (envios == null || envios.Count() == 0)
             {
