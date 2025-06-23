@@ -1,10 +1,9 @@
-﻿using CasosDeUso.InterfacesCasosUso;
-using ExcepcionesPropias;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebMVC.Interfaces;
 
 namespace CasosDeUso.DTOs.Envio
 {
@@ -17,11 +16,11 @@ namespace CasosDeUso.DTOs.Envio
         {
             if (string.IsNullOrEmpty(Nombre))
             {
-                throw new DatosInvalidosException("El nombre-ciudad no puede quedar vacio.");
+                throw new Exception("El nombre-ciudad no puede quedar vacio.");
             }
             if (Nombre.Length > 32)
             {
-                throw new DatosInvalidosException("El nombre-ciudad debe tener menos de 32 letras");
+                throw new Exception("El nombre-ciudad debe tener menos de 32 letras");
             }
         }
         public override string ToString()

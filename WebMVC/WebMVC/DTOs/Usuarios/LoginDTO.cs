@@ -1,11 +1,10 @@
-﻿using CasosDeUso.InterfacesCasosUso;
-using ExcepcionesPropias;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebMVC.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CasosDeUso.DTOs.Usuarios
@@ -25,11 +24,11 @@ namespace CasosDeUso.DTOs.Usuarios
         {
             if (string.IsNullOrEmpty(Email))
             {
-                throw new DatosInvalidosException("El Email no puede quedar vacio.");
+                throw new Exception("El Email no puede quedar vacio.");
             }
             if (string.IsNullOrEmpty(Pass))
             {
-                throw new DatosInvalidosException("La contraseña no puede quedar vacio.");
+                throw new Exception("La contraseña no puede quedar vacio.");
             }
         }
     }
