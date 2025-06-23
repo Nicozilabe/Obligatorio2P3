@@ -2,6 +2,7 @@
 using CasosDeUso.DTOs.Usuarios;
 using CasosDeUso.InterfacesCasosUso;
 using ExcepcionesPropias;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -60,5 +61,41 @@ namespace API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "ha ocurrido un error inesperado.");
             }
         }
+
+        [HttpPut("ChngPass")]
+        [Authorize(Roles ="Cliente")]
+        public ActionResult CambiarContrasena(CambioContrasenaDTO datos)
+        {
+            if (datos == null)
+            {
+                return BadRequest("Error datos cambio contraseña.");
+            }
+            try
+            {
+                datos.Validar();
+            }
+            catch (DatosInvalidosException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            try
+            {
+                // Aquí se llamaría al caso de uso para cambiar la contraseña
+                // Por ejemplo: CuCambioContrasena.CambiarContrasena(datos);
+                return Ok("Contraseña cambiada exitosamente.");
+            }
+            catch (DatosInvalidosException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ha ocurrido un error inesperado.");
+            }
+
+
+        }
+
+
     }
 }
