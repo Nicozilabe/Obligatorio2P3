@@ -3,6 +3,7 @@ using LogicaAccesoADatos.EF;
 using LogicaNegocio.EntidadesDominio.Usuarios;
 using LogicaNegocio.InterfacesRepositorio;
 using LogicaNegocio.ValueObjects.Usuario;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +72,38 @@ namespace LogicaAccesoADatos.Repos
 
         public void Update(Usuario obj)
         {
-            throw new NotImplementedException();
+            if (obj == null)
+            {
+                throw new DatosInvalidosException("");
+            }
+            Usuario aEditar = FindById(obj.Id);
+            if (obj.Password == null)
+            {
+                obj.Password = aEditar.Password;
+            }
+            obj.Validar();
+
+
+
+            if (aEditar.Nombre.Nombre != obj.Nombre.Nombre || aEditar.Activo != obj.Activo || aEditar.Email.Email != obj.Email.Email || aEditar.Password != obj.Password)
+            {
+                if (aEditar.Email.Email != obj.Email.Email)
+                {
+                    Usuario buscado = FindByEmail(obj.Email.Email);
+                    if (buscado != null)
+                    {
+                        throw new DatosInvalidosException("El Email a editar ya existe.");
+                    }
+                }
+            }
+            else
+            {
+                throw new DatosInvalidosException("No se han realizado cambios en el empleado.");
+            }
+
+            Context.Entry(aEditar).State = EntityState.Detached;
+            Context.Usuarios.Update(obj);
+            Context.SaveChanges();
         }
         
     }
