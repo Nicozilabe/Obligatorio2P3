@@ -1,12 +1,11 @@
-﻿using CasosDeUso.InterfacesCasosUso;
-using ExcepcionesPropias;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebMVC.Interfaces;
 
-namespace CasosDeUso.DTOs.Envio
+namespace WebMVC.DTOs.Envio
 {
     public class AgenciaDTO : IValidable
     {
@@ -20,19 +19,19 @@ namespace CasosDeUso.DTOs.Envio
         {
             if (string.IsNullOrEmpty(Nombre))
             {
-                throw new DatosInvalidosException("El Nombre-Agencia no puede quedar vacio.");
+                throw new Exception("El Nombre-Agencia no puede quedar vacio.");
             }
             if (Nombre.Length > 32)
             {
-                throw new DatosInvalidosException("El Nombre-Agencia debe tener menos de 32 letras");
+                throw new Exception("El Nombre-Agencia debe tener menos de 32 letras");
             }
             if (Direccion == null)
             {
-                throw new DatosInvalidosException("Direccion no válida");
+                throw new Exception("Direccion no válida");
             }
             if (Ubicacion == null)
             {
-                throw new DatosInvalidosException("Ubicacion no válida");
+                throw new Exception("Ubicacion no válida");
             }
         }
 
@@ -40,7 +39,5 @@ namespace CasosDeUso.DTOs.Envio
         {
             return $"{Nombre}, {Ciudad}, {Direccion}";
         }
-
-
     }
 }

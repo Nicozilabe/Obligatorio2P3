@@ -1,9 +1,8 @@
-﻿using CasosDeUso.DTOs.Usuarios;
-using CasosDeUso.InterfacesCasosUso;
-using ExcepcionesPropias;
+﻿using WebMVC.DTOs.Usuarios;
 using System.ComponentModel.DataAnnotations;
+using WebMVC.Interfaces;
 
-namespace CasosDeUso.DTOs.Envio
+namespace WebMVC.DTOs.Envio
 {
     public class ComentarioEnvioDTO:IValidable
     {
@@ -21,26 +20,20 @@ namespace CasosDeUso.DTOs.Envio
         {
             if (string.IsNullOrEmpty(Comentario))
             {
-                throw new DatosInvalidosException("El comentario no puede quedar vacio.");
+                throw new Exception("El comentario no puede quedar vacio.");
             }
             if(Comentario.Length > 32)
             {
-                throw new DatosInvalidosException("El comentario debe tener menos de 32 letras");
+                throw new Exception("El comentario debe tener menos de 32 letras");
             }
             if(Fecha == null)
             {
-                throw new DatosInvalidosException("La fecha no puede quedar vacia.");
+                throw new Exception("La fecha no puede quedar vacia.");
             }
             if(EmpleadoId <= 0)
             {
-                throw new DatosInvalidosException("Id Empleado no válido");
+                throw new Exception("Id Empleado no válido");
             }
         }
-
-
-        //validar comentario, fecha y empleado id
-
-
-
     }
 }

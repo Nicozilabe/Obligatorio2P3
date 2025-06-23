@@ -1,11 +1,11 @@
-﻿using CasosDeUso.DTOs.Usuarios;
+﻿using WebMVC.DTOs.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CasosDeUso.DTOs.Envio
+namespace WebMVC.DTOs.Envio
 {
     public class EnvioLigthDTO
     {

@@ -1,18 +1,16 @@
-﻿using CasosDeUso.InterfacesCasosUso;
-using ExcepcionesPropias;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebMVC.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace CasosDeUso.DTOs.Envio
+namespace WebMVC.DTOs.Envio
 {
     public class DireccionDTO : IValidable
     {
-
         [Required(ErrorMessage = "El campo es obligatorio.")]
         [StringLength(32, ErrorMessage = "Calle no puede superar los 32 caracteres.")]
         public string Calle { get; set; }
@@ -27,24 +25,20 @@ namespace CasosDeUso.DTOs.Envio
         {
             if (string.IsNullOrEmpty(Calle))
             {
-                throw new DatosInvalidosException("Calle debe ser un valor válido");
+                throw new Exception("Calle debe ser un valor válido");
             }
             if (Calle.Length > 32)
             {
-                throw new DatosInvalidosException("Calle no debe contener ente 1 y 32 caracteres.");
+                throw new Exception("Calle no debe contener ente 1 y 32 caracteres.");
             }
             if (Numero <= 0 || Numero > 9999 || Numero == null)
             {
-                throw new DatosInvalidosException("Número-Dirección Debe ser un valor entre 1 y 9999");
+                throw new Exception("Número-Dirección Debe ser un valor entre 1 y 9999");
             }
             if (CodigoPostal <= 0 || CodigoPostal > 99999 || CodigoPostal == null)
             {
-                throw new DatosInvalidosException("Número-Dirección Debe ser un valor entre 1 y 99999");
+                throw new Exception("Número-Dirección Debe ser un valor entre 1 y 99999");
             }
-            //if (Ciudad == null)
-            //{
-            //    throw new DatosInvalidosException("Ciudad no válida");
-            //}
         }
 
         public override string ToString()

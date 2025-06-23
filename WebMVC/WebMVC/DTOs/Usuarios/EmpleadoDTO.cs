@@ -1,13 +1,12 @@
-﻿using CasosDeUso.InterfacesCasosUso;
-using ExcepcionesPropias;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebMVC.Interfaces;
 
-namespace CasosDeUso.DTOs.Usuarios
+namespace WebMVC.DTOs.Usuarios
 {
     public class EmpleadoDTO : IValidable
     {
@@ -23,46 +22,45 @@ namespace CasosDeUso.DTOs.Usuarios
         public string Email { get; set; }
         public string Rol { get; set; }
         public bool Activo { get; set; }
-        //no required así se puede no cambiar la contraseña
         public string? Password { get; set; }
 
         public void Validar()
         {
             if (string.IsNullOrEmpty(Nombre))
             {
-                throw new DatosInvalidosException("El nombre no puede quedar vacio.");
+                throw new Exception("El nombre no puede quedar vacio.");
             }
             if (Nombre.Length > 32)
             {
-                throw new DatosInvalidosException("El nombre debe tener menos de 32 letras");
+                throw new Exception("El nombre debe tener menos de 32 letras");
             }
             if (string.IsNullOrEmpty(Apellido))
             {
-                throw new DatosInvalidosException("El apellido no puede quedar vacio.");
+                throw new Exception("El apellido no puede quedar vacio.");
             }
             if (Apellido.Length > 32)
             {
-                throw new DatosInvalidosException("El apellido debe tener menos de 32 letras");
+                throw new Exception("El apellido debe tener menos de 32 letras");
             }
             if (string.IsNullOrEmpty(Email))
             {
-                throw new DatosInvalidosException("El email no puede quedar vacio.");
+                throw new Exception("El email no puede quedar vacio.");
             }
             if (Email.Length > 32)
             {
-                throw new DatosInvalidosException("El email debe tener menos de 32 letras");
+                throw new Exception("El email debe tener menos de 32 letras");
             }
             if (! string.IsNullOrEmpty(Password))
             {
                 if (Password.Length > 32)
                 {
-                    throw new DatosInvalidosException("La contraseña debe tener menos de 32 letras");
+                    throw new Exception("La contraseña debe tener menos de 32 letras");
                 }
             }
             
             if (Rol != "Empleado" && Rol != "Administrador")
             {
-                throw new DatosInvalidosException("Tipo Usuario no válido");
+                throw new Exception("Tipo Usuario no válido");
             }
         }
 

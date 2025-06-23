@@ -1,4 +1,4 @@
-﻿using CasosDeUso.DTOs.Envio;
+﻿using WebMVC.DTOs.Envio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Runtime.Intrinsics.X86;
@@ -22,25 +22,35 @@ namespace WebMVC.Controllers
 
         //GET envios
         //vista para ingresar el numero de tracking F1
-        public ActionResult Index()
+        public ActionResult Seguimiento()
         {
             return View();
         }
         //POST envis
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(int tracking)
+        public ActionResult Seguimiento(int tracking)
         {
             EnvioDTO dto = null;
             try
             {
+                HttpResponseMessage resultado = AuxiliarClienteHttp.EnviarSolicitud(URLApi + tracking, "get", null, null);
+                //string body = AuxiliarClienteHttp.ObtenerBody(resultado);
 
+                if (resultado.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Seguimiento));
+                }
+                else
+                {
+                    ViewBag.Error = AuxiliarClienteHttp.ObtenerBody(resultado);
+                }
             }
             catch (Exception ex)
             {
-
+                ViewBag.Error = "Ocurrio un error en la obtencion del envio";
             }
-            return RedirectToAction("Detalles", dto);
+            return View("Detalles", dto);
         }
 
         //GET detalles
