@@ -155,5 +155,13 @@ namespace LogicaAccesoADatos.Repos
             ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Where(a => a.Cliente == eCliente).ToList());
             return ret;
         }
+
+        public IEnumerable<Envio> FindAllLightByComentario(string eCliente, string comentario)
+        {
+            List<Envio> ret = new List<Envio>();
+            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Where(a => a.Cliente == eCliente && a.Comentarios != null && a.Comentarios.Any(c => c.Comentario.ToLower().Contains(comentario.ToLower()))).ToList());
+            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Where(a => a.Cliente == eCliente && a.Comentarios != null && a.Comentarios.Any(c => c.Comentario.ToLower().Contains(comentario.ToLower()))).ToList());
+            return ret;
+        }
     }
 }
