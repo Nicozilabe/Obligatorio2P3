@@ -40,5 +40,28 @@ namespace API.Controllers
                 return StatusCode(500, "Ocurrió un error, intente nuevamente más tarde");
             }
         }
+
+        [HttpGet("RutaBuscarPorCliente")]
+        //[Authorize(Roles ="Cliente")]
+        public IActionResult GetByEmail(string Email)
+        {
+            if (string.IsNullOrEmpty(Email))
+            {
+                return BadRequest("El email no puede ser nulo o vacío");
+            }
+            try
+            {
+                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnvio.getEnviosByEmail(Email);
+                if (envios == null || !envios.Any())
+                {
+                    return NotFound("No se encontraron envíos para el cliente con email: " + Email);
+                }
+                return Ok(envios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocurrió un error, intente nuevamente más tarde");
+            }
+        }
     }
 }
