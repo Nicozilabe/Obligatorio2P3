@@ -11,5 +11,6 @@ namespace LogicaNegocio.InterfacesRepositorio
     {
         public IEnumerable<Envio> FindAllLightActivos();
         public Envio FindByTracking(int tracking);
+        IEnumerable<Envio> FindAllLightByEmailCliente(string eCliente);
     }
 }
