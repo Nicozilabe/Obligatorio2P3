@@ -34,12 +34,12 @@ namespace LogicaAplicacion.CasosUsoConcretos.Usuarios
             Usuario buscado = Repo.FindByEmail(datos.Email);
             if (buscado != null)
             {
-                if (buscado.Password.Password == datos.PassNueva)
+                if (buscado.Password.Password == datos.PassVieja)
                 {
 
                     buscado.Password = new UsuarioPassword(datos.PassNueva);
 
-
+                    Repo.Update(buscado);
 
                 }
                 else
