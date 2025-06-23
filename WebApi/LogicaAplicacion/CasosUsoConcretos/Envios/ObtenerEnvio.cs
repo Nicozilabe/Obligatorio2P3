@@ -42,9 +42,8 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
             }
             var envio = repoEnvios.FindById(id);
           
-                throw new DatosInvalidosException("El envío no existe");
             
-                return MapperEnvio.ToDTO(envio);
+            return MapperEnvio.ToDTO(envio);
             
         }
 
