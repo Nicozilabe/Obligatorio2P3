@@ -64,7 +64,7 @@ namespace LogicaAccesoADatos.Repos
             Usuario aBorrar = FindById(id);
             if (aBorrar == null)
             {
-                throw new DatosInvalidosException("No hay un Empleado para borrar aqui");
+                throw new DatosInvalidosException("No hay un Usuario para borrar aqui");
             }
             Context.Usuarios.Remove(aBorrar);
             Context.SaveChanges();
@@ -98,7 +98,7 @@ namespace LogicaAccesoADatos.Repos
             }
             else
             {
-                throw new DatosInvalidosException("No se han realizado cambios en el empleado.");
+                throw new DatosInvalidosException("No se han realizado cambios en el Usuario.");
             }
 
             Context.Entry(aEditar).State = EntityState.Detached;
