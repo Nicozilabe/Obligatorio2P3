@@ -1,4 +1,4 @@
-﻿using CasosDeUso.DTOs.Usuarios;
+﻿using WebMVC.DTOs.Usuarios;
 using System.ComponentModel.DataAnnotations;
 using WebMVC.Interfaces;
 
