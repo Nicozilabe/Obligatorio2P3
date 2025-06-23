@@ -43,7 +43,7 @@ namespace API.Controllers
 
         [HttpGet("RutaBuscarPorCliente")]
         //[Authorize(Roles ="Cliente")]
-        public IActionResult GetByEmail(string Email)
+        public IActionResult GetByEmail([FromQuery]string Email)
         {
             if (string.IsNullOrEmpty(Email))
             {
