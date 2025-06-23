@@ -42,7 +42,7 @@ namespace API
 
             //Casos de uso que miedo.
             builder.Services.AddScoped<ILogin, Login>();
-
+            builder.Services.AddScoped<ICambiarContraseña, CambiarContrasena>();
             builder.Services.AddScoped<IObtenerAgencias, ObtenerAgencias>();
             builder.Services.AddScoped<IObtenerCiudades, ObtenerCiudades>();
 
