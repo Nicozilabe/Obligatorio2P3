@@ -14,10 +14,12 @@ namespace API.Controllers
     {
 
         public ILogin CULogin { get; set; }
+        public ICambiarContraseña CuCambioContrasena { get; set; }
 
-        public UsuariosController(ILogin cULogin)
+        public UsuariosController(ILogin cULogin, ICambiarContraseña cuCambioContrasena)
         {
             CULogin = cULogin;
+            CuCambioContrasena = cuCambioContrasena;
         }
 
 
@@ -63,7 +65,7 @@ namespace API.Controllers
         }
 
         [HttpPut("ChngPass")]
-        [Authorize(Roles ="Cliente")]
+        //[Authorize(Roles ="Cliente")]
         public ActionResult CambiarContrasena(CambioContrasenaDTO datos)
         {
             if (datos == null)
@@ -80,8 +82,7 @@ namespace API.Controllers
             }
             try
             {
-                // Aquí se llamaría al caso de uso para cambiar la contraseña
-                // Por ejemplo: CuCambioContrasena.CambiarContrasena(datos);
+                CuCambioContrasena.CambiarContraseña(datos);
                 return Ok("Contraseña cambiada exitosamente.");
             }
             catch (DatosInvalidosException ex)
