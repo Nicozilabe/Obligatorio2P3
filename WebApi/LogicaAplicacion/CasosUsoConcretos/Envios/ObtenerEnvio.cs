@@ -78,5 +78,21 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
             }
             return envios;
         }
+
+        public IEnumerable<EnvioLigthDTO> getEnviosByComentario(FiltroComentarioDTO datos)
+        {
+            IEnumerable<EnvioLigthDTO> envios = MapperEnvio.ToListEnvioLigthDTO(repoEnvios.FindAllLightByComentario( datos));
+
+            if (envios == null || envios.Count() == 0)
+            {
+                throw new DatosInvalidosException("No se encontraron envios activos.");
+            }
+            else
+            {
+                IEnumerable<EnvioLigthDTO> ordenados = envios.OrderBy(e => e.FechaRegistroEnvio);
+                envios = ordenados;
+            }
+            return envios;
+        }
     }
 }
