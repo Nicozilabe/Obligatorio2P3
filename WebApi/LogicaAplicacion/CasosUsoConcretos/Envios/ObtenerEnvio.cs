@@ -71,6 +71,11 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
             {
                 throw new DatosInvalidosException("No se encontraron envios activos.");
             }
+            else
+            {
+                IEnumerable<EnvioLigthDTO> ordenados = envios.OrderBy(e => e.FechaRegistroEnvio);
+                envios = ordenados;
+            }
             return envios;
         }
     }
