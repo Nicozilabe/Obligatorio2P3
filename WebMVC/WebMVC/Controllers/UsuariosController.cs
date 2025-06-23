@@ -60,6 +60,72 @@ namespace WebMVC.Controllers
             return View(dto);
         }
 
+        //GET /api/Usuarios/ChngPass
+        [HttpGet]
+        public ActionResult ChngPass()
+        {
+            string email = HttpContext.Session.GetString("LogEmail");
+            if (string.IsNullOrEmpty(email))
+            {
+                ViewBag.Error = "No se pudo obtener el email del usuario logueado.";
+                return RedirectToAction("Login", "Usuarios");
+            }
+            var dto = new CambioContrasenaDTO
+            {
+                Email = email
+            };
+            return View(dto);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChngPass(string passVieja, string passNueva, string passNuevaConfirmacion)
+        {
+            string email = HttpContext.Session.GetString("LogEmail");
+            if (string.IsNullOrEmpty(email))
+            {
+                ViewBag.Error = "No se puede validar al usuario.";
+                return RedirectToAction("Login", "Usuarios");
+            }
+            if (string.IsNullOrEmpty(passVieja) || string.IsNullOrEmpty(passNueva) || string.IsNullOrEmpty(passNuevaConfirmacion))
+            {
+                ViewBag.Error = "Los campos no pueden quedar vacios.";
+                return View(new CambioContrasenaDTO { Email = email });
+            }
+            if (passNueva != passNuevaConfirmacion)
+            {
+                ViewBag.Error = "Las contraseñas no coinciden.";
+                return View(new CambioContrasenaDTO { Email = email });
+            }
+            try
+            {
+                var dto = new CambioContrasenaDTO
+                {
+                    Email = email,
+                    PassVieja = passVieja,
+                    PassNueva = passNueva
+                };
+                dto.Validar();
+
+                var respuesta = AuxiliarClienteHttp.EnviarSolicitud(URLApi + "ChngPass", "put", dto, HttpContext.Session.GetString("LogToken"));
+                string body = AuxiliarClienteHttp.ObtenerBody(respuesta);
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    ViewBag.Mensaje = "Contraseña cambiada correctamente.";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Error = $"Error Api: {respuesta.StatusCode} - {body}";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+            return View(new CambioContrasenaDTO { Email = email });
+        }
+
         public ActionResult Logout()
         {
             return View();
