@@ -34,7 +34,7 @@ namespace WebMVC.Controllers
             EnvioDTO dto = null;
             try
             {
-                HttpResponseMessage resultado = AuxiliarClienteHttp.EnviarSolicitud(URLApi + tracking, "get", null, null);
+                HttpResponseMessage resultado = AuxiliarClienteHttp.EnviarSolicitud(URLApi + "RutaBuscarPorTracking/" + tracking, "get", null, null);
                 //string body = AuxiliarClienteHttp.ObtenerBody(resultado);
 
                 if (resultado.IsSuccessStatusCode)
