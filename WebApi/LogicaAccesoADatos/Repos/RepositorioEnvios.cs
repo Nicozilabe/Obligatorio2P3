@@ -147,5 +147,13 @@ namespace LogicaAccesoADatos.Repos
                 return buscado;
             }
         }
+
+        public IEnumerable<Envio> FindAllLightByEmailCliente(string eCliente)
+        {
+            List<Envio> ret = new List<Envio>();
+            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Where(a => a.Cliente == eCliente).ToList());
+            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Where(a => a.Cliente == eCliente).ToList());
+            return ret;
+        }
     }
 }
