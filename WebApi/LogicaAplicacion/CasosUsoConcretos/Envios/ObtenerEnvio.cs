@@ -38,12 +38,12 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
         {
             if (id <= 0)
             {
-                throw new ArgumentException("El id no puede ser menor o igual a cero");
+                throw new DatosInvalidosException("El id no puede ser menor o igual a cero");
             }
             var envio = repoEnvios.FindById(id);
             if (envio == null)
             {
-                throw new ArgumentException("El envío no existe");
+                throw new DatosInvalidosException("El envío no existe");
             }
             else
             {
@@ -67,11 +67,8 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
         {
             IEnumerable<EnvioLigthDTO> envios = MapperEnvio.ToListEnvioLigthDTO(repoEnvios.FindAllLightByEmailCliente(email));
 
-            if (envios == null || envios.Count() == 0)
-            {
-                throw new DatosInvalidosException("No se encontraron envios activos.");
-            }
-            else
+            
+            if (envios != null)
             {
                 IEnumerable<EnvioLigthDTO> ordenados = envios.OrderBy(e => e.FechaRegistroEnvio);
                 envios = ordenados;
@@ -84,11 +81,8 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
             datos.Validar();
             IEnumerable<EnvioLigthDTO> envios = MapperEnvio.ToListEnvioLigthDTO(repoEnvios.FindAllLightByComentario(datos.Email, datos.Comentario));
 
-            if (envios == null || envios.Count() == 0)
-            {
-                throw new DatosInvalidosException("No se encontraron envios activos.");
-            }
-            else
+
+            if (envios != null)
             {
                 IEnumerable<EnvioLigthDTO> ordenados = envios.OrderBy(e => e.FechaRegistroEnvio);
                 envios = ordenados;
