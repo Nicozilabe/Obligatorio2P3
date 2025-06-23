@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Runtime.Intrinsics.X86;
+using Newtonsoft.Json;
 
 namespace WebMVC.Controllers
 {
@@ -35,15 +36,15 @@ namespace WebMVC.Controllers
             try
             {
                 HttpResponseMessage resultado = AuxiliarClienteHttp.EnviarSolicitud(URLApi + "RutaBuscarPorTracking/" + tracking, "get", null, null);
-                //string body = AuxiliarClienteHttp.ObtenerBody(resultado);
+                string body = AuxiliarClienteHttp.ObtenerBody(resultado);
 
                 if (resultado.IsSuccessStatusCode)
                 {
-                    return RedirectToAction(nameof(Seguimiento));
+                    dto = JsonConvert.DeserializeObject<EnvioDTO>(body);
                 }
                 else
                 {
-                    ViewBag.Error = AuxiliarClienteHttp.ObtenerBody(resultado);
+                    ViewBag.Error = body;
                 }
             }
             catch (Exception ex)
