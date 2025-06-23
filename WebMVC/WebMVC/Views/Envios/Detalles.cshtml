@@ -8,7 +8,7 @@
     <div class="alert alert-danger">@ViewBag.Error</div>
 } else if(Model != null){
     <div>
-        <h4>EnvioDTO</h4>
+        <h4>Envio</h4>
         <hr />
         <dl class="row">
             <dt class = "col-sm-2">
@@ -44,7 +44,7 @@
             <dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.FechaRegistroEnvio)
             </dt>
-            <dd class = "col-sm-10">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.FechaRegistroEnvio)
             </dd>
             <dt class = "col-sm-2">
@@ -57,15 +57,47 @@
                 @Html.DisplayNameFor(model => model.FechaEntrega)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.FechaEntrega)
+                @if (Model.FechaEntrega != null)
+                {
+                    @Html.DisplayFor(m => m.FechaEntrega)
+                }
+                else
+                {
+                    <span class="text-muted">No entregado</span>
+                }
             </dd>
             <dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.EnvioEficiente)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.EnvioEficiente)
+                @(Model.EnvioEficiente ? "Sí" : "No")
             </dd>
         </dl>
+		@if (Model.Comentarios?.Any() == true)
+		{
+			<h4>Seguimientos</h4>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Fecha</th>
+						<th>Comentario</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var c in Model.Comentarios)
+					{
+						<tr>
+							<td>@c.Fecha</td>
+							<td>@c.Comentario</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		}
+		else
+		{
+			<p class="text-muted">No hay seguimientos disponibles.</p>
+		}
 	</div>
 }
 <div>
