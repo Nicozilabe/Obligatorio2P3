@@ -11,51 +11,28 @@
         <h4>Envio</h4>
         <hr />
         <dl class="row">
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Id)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Id)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Tracking)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Tracking)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.EmailCliente)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.EmailCliente)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Peso)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Peso)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.EstadoEnvio)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.EstadoEnvio)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.FechaRegistroEnvio)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FechaRegistroEnvio)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.TipoEnvio)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.TipoEnvio)
-            </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.FechaEntrega)
-            </dt>
+            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.Id)</dt>
+            <dd class = "col-sm-10">@Html.DisplayFor(model => model.Id)</dd>
+
+            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.Tracking)</dt>
+            <dd class = "col-sm-10">@Html.DisplayFor(model => model.Tracking)</dd>
+
+            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.EmailCliente)</dt>
+            <dd class = "col-sm-10">@Html.DisplayFor(model => model.EmailCliente)</dd>
+
+            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.Peso)</dt>
+            <dd class = "col-sm-10">@Html.DisplayFor(model => model.Peso)</dd>
+
+            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.EstadoEnvio)</dt>
+            <dd class = "col-sm-10">@Html.DisplayFor(model => model.EstadoEnvio)</dd>
+
+            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.FechaRegistroEnvio)</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.FechaRegistroEnvio)</dd>
+
+            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.TipoEnvio)</dt>
+            <dd class = "col-sm-10">@Html.DisplayFor(model => model.TipoEnvio)</dd>
+
+            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.FechaEntrega)</dt>
             <dd class = "col-sm-10">
                 @if (Model.FechaEntrega != null)
                 {
@@ -66,12 +43,9 @@
                     <span class="text-muted">No entregado</span>
                 }
             </dd>
-            <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.EnvioEficiente)
-            </dt>
-            <dd class = "col-sm-10">
-                @(Model.EnvioEficiente ? "Sí" : "No")
-            </dd>
+
+            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.EnvioEficiente)</dt>
+            <dd class = "col-sm-10">@(Model.EnvioEficiente ? "Sí" : "No")</dd>
         </dl>
 		@if (Model.Comentarios?.Any() == true)
 		{
