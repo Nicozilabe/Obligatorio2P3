@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{906886A8-B859-42E6-84CD-9DA0A98347FA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasosDeUso", "CasosDeUso\CasosDeUso.csproj", "{7E052444-7536-4780-98ED-69EDC7EF72F0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcepcionesPropias", "ExcepcionesPropias\ExcepcionesPropias.csproj", "{2AB1ECCC-81AC-4A9E-8576-B2D5B4A996F4}"
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{906886A8-B859-42E6-84CD-9DA0A98347FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{906886A8-B859-42E6-84CD-9DA0A98347FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{906886A8-B859-42E6-84CD-9DA0A98347FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{906886A8-B859-42E6-84CD-9DA0A98347FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E052444-7536-4780-98ED-69EDC7EF72F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E052444-7536-4780-98ED-69EDC7EF72F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E052444-7536-4780-98ED-69EDC7EF72F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
