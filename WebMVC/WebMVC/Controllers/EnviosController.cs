@@ -29,7 +29,7 @@ namespace WebMVC.Controllers
             EnvioDTO dto = null;
             try
             {
-                HttpResponseMessage resultado = AuxiliarClienteHttp.EnviarSolicitud(URLApi + "RutaBuscarPorTracking/" + tracking, "get", null, null);
+                HttpResponseMessage resultado = AuxiliarClienteHttp.EnviarSolicitud(URLApi + "BuscarPorTracking/" + tracking, "get", null, null);
                 string body = AuxiliarClienteHttp.ObtenerBody(resultado);
 
                 if (resultado.IsSuccessStatusCode)
@@ -46,6 +46,55 @@ namespace WebMVC.Controllers
                 ViewBag.Error = "Ocurrio un error en la obtencion del envio";
             }
             return View("Detalles", dto);
+        }
+
+        //GET envios listar mis ewnvios
+        public ActionResult ListarMisEnvios()
+        {
+            List<EnvioLigthDTO> envios = new List<EnvioLigthDTO>();
+            string email = HttpContext.Session.GetString("LogEmail");
+            string token = HttpContext.Session.GetString("LogToken");
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Usuarios");
+            }
+            
+            var url = $"{URLApi}BuscarPorCliente?Email={email}";
+            var resp = AuxiliarClienteHttp.EnviarSolicitud(url, "get", null, token);
+            string body = AuxiliarClienteHttp.ObtenerBody(resp);
+            if (!resp.IsSuccessStatusCode)
+            {
+                ViewBag.Error = $"Error API: {resp.StatusCode} - {body}";
+                return View(new List<EnvioLigthDTO>());
+            }
+            var lista = JsonConvert.DeserializeObject<List<EnvioLigthDTO>>(body);
+            var ordenada = lista.OrderByDescending(e => e.FechaRegistroEnvio).ToList();
+
+            return View("ListarMisEnvios", ordenada);
+        }
+        [HttpGet]
+        public ActionResult DetallesEnvio(int id)
+        {
+            EnvioDTO dto = null;
+            string token = HttpContext.Session.GetString("LogToken");
+            try
+            {
+                var resp = AuxiliarClienteHttp.EnviarSolicitud($"{URLApi}BuscarPorId/{id}", "get", null, token);
+                string body = AuxiliarClienteHttp.ObtenerBody(resp);
+                if (resp.IsSuccessStatusCode)
+                {
+                    dto = JsonConvert.DeserializeObject<EnvioDTO>(body);
+                }
+                else
+                {
+                    ViewBag.Error = "No se pudo obtener los datells del envio.";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Ocurrio un error en la obtencion del envio";
+            }
+            return View("DetallesEnvio", dto);
         }
 
         //GET detalles
