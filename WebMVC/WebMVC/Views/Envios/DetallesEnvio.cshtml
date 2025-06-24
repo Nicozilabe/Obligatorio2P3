@@ -1,9 +1,9 @@
 ﻿@model WebMVC.DTOs.Envio.EnvioDTO
 @{
-    ViewData["Title"] = "Detalles del Envio";
+    ViewData["Title"] = "Detalles de mi Envio";
 }
 
-<h2>Detalles del Envio</h2>
+<h1>Detalles de mi Envio</h1>
 @if(ViewBag.Error != null){
     <div class="alert alert-danger">@ViewBag.Error</div>
 } else if(Model != null){
@@ -75,5 +75,5 @@
 	</div>
 }
 <div>
-    <a asp-action="Seguimiento">Volver a Seguimiento</a>
+    <a asp-action="ListarMisEnvios">Volver a Mis Envíos</a>
 </div>

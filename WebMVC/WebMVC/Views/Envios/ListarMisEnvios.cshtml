@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebMVC.DTOs.Envio.EnvioLigthDTO>
+@{
+    ViewData["Title"] = "Mis Envios";
+}
+
+<h1>Mis Envios</h1>
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+else if (!Model.Any())
+{
+    <p class="text-muted">No tienes envíos registrados.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.First().Id)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Tracking)</th>
+                <th>@Html.DisplayNameFor(m => m.First().FechaRegistroEnvio)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Peso)</th>
+                <th>@Html.DisplayNameFor(m => m.First().TipoEnvio)</th>
+                <th>@Html.DisplayNameFor(m => m.First().EstadoEnvio)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Destino)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Tracking</td>
+                    <td>@item.FechaRegistroEnvio.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Peso</td>
+                    <td>@item.TipoEnvio</td>
+                    <td>@item.EstadoEnvio</td>
+                    <td>@item.Destino</td>
+					<td>
+						@Html.ActionLink("Ver detalles", "DetallesEnvio", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
