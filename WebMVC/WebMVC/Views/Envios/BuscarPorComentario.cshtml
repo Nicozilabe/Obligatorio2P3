@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WebMVC.DTOs.Envio.EnvioLigthDTO>
+@{
+    ViewData["Title"] = "Buscar Envio por Comentario";
+    var termino = ViewBag.Comentario as string ?? "";
+    var resultados = Model ?? Enumerable.Empty<WebMVC.DTOs.Envio.EnvioLigthDTO>();
+}
+
+<h1>Buscar Envios por Comentario</h1>
+<form asp-action="BuscarPorComentario" method="post" class="mb-4">
+    @Html.AntiForgeryToken()
+    <div class="input-group">
+        <input type="text" name="comentario" value="@termino" class="form-control" placeholder="Su comentario" required />
+        <button class="btn btn-primary">Buscar</button>
+    </div>
+</form>
+@if (ViewBag.Error != null){
+    <div class="alert alert-danger">@ViewBag.Error</div>
+} 
+else if (!resultados.Any() && !string.IsNullOrEmpty(termino)) {
+    <p class="text-muted">No se encontraron envíos con "@termino".</p>
+}
+else if (resultados.Any())
+{
+    <h5>Resultados para “@termino”</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tracking</th>
+                <th>Registro</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var envio in resultados)
+            {
+                <tr>
+                    <td>@envio.Tracking</td>
+                    <td>@envio.FechaRegistroEnvio.ToString("dd/MM/yyyy")</td>
+                    <td>@envio.EstadoEnvio</td>
+                    <td>
+                        @Html.ActionLink("Ver detalles", "DetallesBusquedaComentario", new { id = envio.Id })
+                                
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div id="detalle-container" class="mt-4"></div>
