@@ -165,9 +165,20 @@ namespace LogicaAccesoADatos.Repos
             return ret;
         }
 
-        public IEnumerable<Envio> FindByFecha(string email, DateOnly? fechaDesde, DateOnly? fechaHasta, string? estado)
+        public IEnumerable<Envio> FindByFecha(string email, DateTime? fechaDesde, DateTime? fechaHasta, string? estado)
         {
-            throw new NotImplementedException();
+            List<Envio> ret = new List<Envio>();
+            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(email)));
+            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Cliente).Include(a => a.Ciudad).Where(a => a.Cliente.Email == new UsuarioEmail(email)));
+
+            if (fechaDesde.HasValue)
+            {
+                ret = ret.Where(e => e.FechaRegistroEnvio >= fechaDesde.Value).ToList();
+            }
+            if (fechaHasta.HasValue)
+            {
+                ret = ret.Where(e => e.FechaRegistroEnvio.Date <= fechaHasta.Value).ToList();
+            }
         }
     }
 }
