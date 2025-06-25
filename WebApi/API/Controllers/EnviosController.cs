@@ -18,14 +18,16 @@ namespace API.Controllers
         IObtenerEnvioByTracking CUObtenerEnvioByTracking { get; set; }
         IObtenerEnvioByComentario CUObtenerEnvioByComentario { get; set; }
         IObtenerEnviosByEmail CUObtenerEnviosByEmail { get; set; }
+        IObtenerEnviosByFecha CUObtenerEnviosByFecha { get; set; }
 
-        public EnviosController(IObtenerEnvio cuObtenerEnvio, IObtenerEnviosActivos cUObtenerEnviosActivos, IObtenerEnvioByTracking cUObtenerEnvioByTracking, IObtenerEnvioByComentario cUObtenerEnvioByComentario, IObtenerEnviosByEmail cUObtenerEnviosByEmail)
+        public EnviosController(IObtenerEnvio cuObtenerEnvio, IObtenerEnviosActivos cUObtenerEnviosActivos, IObtenerEnvioByTracking cUObtenerEnvioByTracking, IObtenerEnvioByComentario cUObtenerEnvioByComentario, IObtenerEnviosByEmail cUObtenerEnviosByEmail, IObtenerEnviosByFecha cUObtenerEnviosByFecha)
         {
             CUObtenerEnvio = cuObtenerEnvio;
             CUObtenerEnviosActivos = cUObtenerEnviosActivos;
             CUObtenerEnvioByTracking = cUObtenerEnvioByTracking;
             CUObtenerEnvioByComentario = cUObtenerEnvioByComentario;
             CUObtenerEnviosByEmail = cUObtenerEnviosByEmail;
+            CUObtenerEnviosByFecha = cUObtenerEnviosByFecha;
         }
 
         [HttpGet("BuscarPorTracking/{tracking}")]
@@ -130,6 +132,39 @@ namespace API.Controllers
                     return NotFound("El envío con id=" + id + " no existe");
                 }
                 return Ok(envio);
+            }
+            catch (DatosInvalidosException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (PermisosException ex)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocurrió un error, intente nuevamente más tarde");
+            }
+        }
+
+        [HttpGet("BuscarPorFecha")]
+        //[Authorize(Roles = "Cliente")]
+        public IActionResult GetByFecha([FromQuery] FiltroFechaDTO filtro)
+        {
+            if (filtro == null)
+            {
+                return BadRequest("El filtro no puede ser nulo");
+            }
+
+            try
+            {
+                filtro.Validar();
+                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnviosByFecha.getEnviosByFecha(filtro);
+                if (envios == null || !envios.Any())
+                {
+                    return NotFound("No se encontraron envíos para el filtro proporcionado");
+                }
+                return Ok(envios);
             }
             catch (DatosInvalidosException ex)
             {
