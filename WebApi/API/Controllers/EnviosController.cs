@@ -148,7 +148,7 @@ namespace API.Controllers
         }
 
         [HttpGet("BuscarPorFecha")]
-        //[Authorize(Roles = "Cliente")]
+        [Authorize(Roles = "Cliente")]
         public IActionResult GetByFecha([FromQuery] FiltroFechaDTO filtro)
         {
             if (filtro == null)
