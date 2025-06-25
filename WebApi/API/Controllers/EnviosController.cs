@@ -13,10 +13,18 @@ namespace API.Controllers
     {
 
         IObtenerEnvio CUObtenerEnvio { get; set; }
+        IObtenerEnviosActivos CUObtenerEnviosActivos { get; set; }
+        IObtenerEnvioByTracking CUObtenerEnvioByTracking { get; set; }
+        IObtenerEnvioByComentario CUObtenerEnvioByComentario { get; set; }
+        IObtenerEnviosByEmail CUObtenerEnviosByEmail { get; set; }
 
-        public EnviosController(IObtenerEnvio cuObtenerEnvio)
+        public EnviosController(IObtenerEnvio cuObtenerEnvio, IObtenerEnviosActivos cUObtenerEnviosActivos, IObtenerEnvioByTracking cUObtenerEnvioByTracking, IObtenerEnvioByComentario cUObtenerEnvioByComentario, IObtenerEnviosByEmail cUObtenerEnviosByEmail)
         {
             CUObtenerEnvio = cuObtenerEnvio;
+            CUObtenerEnviosActivos = cUObtenerEnviosActivos;
+            CUObtenerEnvioByTracking = cUObtenerEnvioByTracking;
+            CUObtenerEnvioByComentario = cUObtenerEnvioByComentario;
+            CUObtenerEnviosByEmail = cUObtenerEnviosByEmail;
         }
 
         [HttpGet("BuscarPorTracking/{tracking}")]
@@ -28,7 +36,7 @@ namespace API.Controllers
             }
             try
             {
-                EnvioDTO e = CUObtenerEnvio.getByTracking(tracking);
+                EnvioDTO e = CUObtenerEnvioByTracking.getByTracking(tracking);
                 if (e == null)
                 {
                     return NotFound("El envio con tracking=" + tracking + " no existe");
@@ -51,7 +59,7 @@ namespace API.Controllers
             }
             try
             {
-                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnvio.getEnviosByEmail(Email);
+                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnviosByEmail.getEnviosByEmail(Email);
                 if (envios == null || !envios.Any())
                 {
                     return NotFound("No se encontraron envíos para el cliente con email: " + Email);
@@ -84,7 +92,7 @@ namespace API.Controllers
             try
             {
                 datos.Validar();
-                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnvio.getEnviosByComentario(datos);
+                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnvioByComentario.getEnviosByComentario(datos);
                 if (envios == null || !envios.Any())
                 {
                     return NotFound("No se encontraron envíos para el cliente con email: " + datos.Email + " y comentario " + datos.Comentario);
