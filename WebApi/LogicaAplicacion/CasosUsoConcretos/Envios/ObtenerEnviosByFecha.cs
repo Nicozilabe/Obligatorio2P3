@@ -2,6 +2,7 @@
 using CasosDeUso.InterfacesCasosUso;
 using ExcepcionesPropias;
 using LogicaAplicacion.Mapeadores.Envios;
+using LogicaNegocio.EntidadesDominio.Envíos;
 using LogicaNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
         }
         public IEnumerable<EnvioLigthDTO> getEnviosByFecha(FiltroFechaDTO datos)
         {
+            IEnumerable<Envio> Envios = null;
+            IEnumerable < EnvioLigthDTO > Ret = null;
 
             if (datos == null)
             {
@@ -28,12 +31,11 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
             }
             datos.Validar();
 
-            IEnumerable<EnvioLigthDTO> Envios = MapperEnvio.ToListEnvioLigthDTO(repoEnvios.FindByFecha(datos.Email, datos.FInicio, datos.FFin, datos.Estado));
-            IEnumerable<EnvioLigthDTO> Ret = null;
+             Envios = repoEnvios.FindByFecha(datos.Email, datos.FInicio, datos.FFin, datos.Estado);
 
-            if (Envios != null && Envios.Count() > 0)
+            if(Envios != null)
             {
-                Ret = Envios.OrderBy(e => e.Tracking);
+                Ret = MapperEnvio.ToListEnvioLigthDTO(Envios);
             }
 
             return Ret;

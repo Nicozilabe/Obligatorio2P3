@@ -1,6 +1,7 @@
 ﻿using CasosDeUso.DTOs.Envio;
 using CasosDeUso.InterfacesCasosUso;
 using LogicaAplicacion.Mapeadores.Envios;
+using LogicaNegocio.EntidadesDominio.Envíos;
 using LogicaNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -21,15 +22,16 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
 
         public IEnumerable<EnvioLigthDTO> getEnviosByEmail(string email)
         {
-            IEnumerable<EnvioLigthDTO> envios = MapperEnvio.ToListEnvioLigthDTO(repoEnvios.FindAllLightByEmailCliente(email));
-
+            IEnumerable<Envio> envios = null;
+            envios = repoEnvios.FindAllLightByEmailCliente(email);
+            IEnumerable<EnvioLigthDTO> ret = null;
 
             if (envios != null)
             {
-                IEnumerable<EnvioLigthDTO> ordenados = envios.OrderBy(e => e.FechaRegistroEnvio);
-                envios = ordenados;
+                ret= MapperEnvio.ToListEnvioLigthDTO(envios);
             }
-            return envios;
+
+            return ret;
         }
     }
 }
