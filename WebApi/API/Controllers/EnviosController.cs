@@ -1,6 +1,7 @@
 ﻿using CasosDeUso.DTOs.Envio;
 using CasosDeUso.InterfacesCasosUso;
 using ExcepcionesPropias;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -50,7 +51,7 @@ namespace API.Controllers
         }
 
         [HttpGet("BuscarPorCliente")]
-        //[Authorize(Roles ="Cliente")]
+        [Authorize(Roles = "Cliente")]
         public IActionResult GetByEmail([FromQuery]string Email)
         {
             if (string.IsNullOrEmpty(Email))
@@ -81,7 +82,7 @@ namespace API.Controllers
         }
 
         [HttpGet("BuscarPorComentario")]
-        //[Authorize(Roles ="Cliente")]
+        [Authorize(Roles = "Cliente")]
         public IActionResult GetByComentariol([FromQuery]FiltroComentarioDTO datos)
         {
             if (datos == null)
@@ -114,7 +115,7 @@ namespace API.Controllers
         }
 
         [HttpGet("BuscarPorID/{id}")]
-        //[Authorize(Roles ="Cliente")]
+        [Authorize(Roles = "Cliente")]
         public IActionResult GetByID(int id)
         {
             if (id <= 0)
