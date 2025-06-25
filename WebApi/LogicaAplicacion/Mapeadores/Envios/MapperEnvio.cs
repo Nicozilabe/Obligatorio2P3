@@ -27,7 +27,7 @@ namespace LogicaAplicacion.Mapeadores.Envios
 
             ret.EstadoEnvio = TipoEstadoEnvio.En_Proceso;
             ret.EmpleadoResponable = EmpleadoResponsable;
-            ret.Cliente = dto.EmailCliente;
+            
             ret.Peso = dto.Peso;
 
             ret.Agencia = agencia;
@@ -43,7 +43,7 @@ namespace LogicaAplicacion.Mapeadores.Envios
 
             ret.EstadoEnvio = TipoEstadoEnvio.En_Proceso;
             ret.EmpleadoResponable = EmpleadoResponsable;
-            ret.Cliente = dto.EmailCliente;
+            
             ret.Peso = dto.Peso;
             ret.Ciudad = c;
             ret.Direccion = di;
@@ -56,7 +56,7 @@ namespace LogicaAplicacion.Mapeadores.Envios
 
             ret.Id = e.Id;
             ret.Peso = e.Peso;
-            ret.EmailCliente = e.Cliente;
+            ret.EmailCliente = e.Cliente.Email.Email;
             ret.EstadoEnvio = e.EstadoEnvio.ToString();
             ret.TipoEnvio = e.GetType().Name;
             ret.FechaRegistroEnvio = e.FechaRegistroEnvio;
@@ -87,7 +87,7 @@ namespace LogicaAplicacion.Mapeadores.Envios
 
             ret.Id = e.Id;
             ret.Peso = e.Peso;
-            ret.EmailCliente = e.Cliente;
+            ret.EmailCliente = e.Cliente.Email.Email;
             ret.EstadoEnvio = e.EstadoEnvio.ToString();
             ret.TipoEnvio = e.GetType().Name;
             ret.FechaRegistroEnvio = e.FechaRegistroEnvio;
