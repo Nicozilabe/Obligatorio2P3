@@ -4,6 +4,7 @@ using LogicaNegocio.EntidadesDominio.Envíos;
 using LogicaNegocio.EntidadesDominio.Usuarios;
 using LogicaNegocio.Enums;
 using LogicaNegocio.InterfacesRepositorio;
+using LogicaNegocio.ValueObjects.Usuario;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -59,13 +60,13 @@ namespace LogicaAccesoADatos.Repos
 
             if ( buscado is EnvioUrgente)
             {
-                 urgente = Context.Envios.OfType<EnvioUrgente>().Where(e => e.Id == id).Include(e => e.Ciudad).Include(e => e.Direccion).Include(e => e.EmpleadoResponable).Include(e => e.Comentarios).SingleOrDefault();
+                 urgente = Context.Envios.OfType<EnvioUrgente>().Where(e => e.Id == id).Include(a => a.Cliente).Include(e => e.Ciudad).Include(e => e.Direccion).Include(e => e.EmpleadoResponable).Include(e => e.Comentarios).SingleOrDefault();
             }
             if (buscado is EnvioComun)
             {
                  comun = Context.Envios.OfType<EnvioComun>().Where(e => e.Id == id)
-                    .Include(e => e.Agencia).Include(e => e.Agencia.Direccion).Include(e => e.EmpleadoResponable)
-                    .Include(e => e.Agencia.Ubicacion).Include(e => e.Agencia.Ciudad).Include(e => e.Comentarios).SingleOrDefault();
+                    .Include(e => e.Agencia).Include(e => e.Agencia.Direccion).Include(a => a.Cliente).Include(e => e.EmpleadoResponable)
+                    .Include(e => e.Agencia.Ubicacion).Include(e => e.Agencia.Ciudad).Include(a => a.Cliente).Include(e => e.Comentarios).SingleOrDefault();
             }
 
             if (urgente != null)
@@ -111,8 +112,8 @@ namespace LogicaAccesoADatos.Repos
         public IEnumerable<Envio> FindAllLightActivos()
         {
             List<Envio> ret = new List<Envio>();
-            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Where(a => a.EstadoEnvio == TipoEstadoEnvio.En_Proceso).ToList());
-            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Where(a => a.EstadoEnvio == TipoEstadoEnvio.En_Proceso).ToList());
+            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Include(a => a.Cliente).Where(a => a.EstadoEnvio == TipoEstadoEnvio.En_Proceso).ToList());
+            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Include(a => a.Cliente).Where(a => a.EstadoEnvio == TipoEstadoEnvio.En_Proceso).ToList());
             return ret;
         }
 
@@ -125,13 +126,13 @@ namespace LogicaAccesoADatos.Repos
 
             if (buscado is EnvioUrgente)
             {
-                urgente = Context.Envios.OfType<EnvioUrgente>().Where(e => e.Tracking == tracking).Include(e => e.Ciudad).Include(e => e.Direccion).Include(e => e.EmpleadoResponable).Include(e => e.Comentarios).SingleOrDefault();
+                urgente = Context.Envios.OfType<EnvioUrgente>().Where(e => e.Tracking == tracking).Include(e => e.Ciudad).Include(e => e.Direccion).Include(e => e.EmpleadoResponable).Include(e => e.Comentarios).Include(a => a.Cliente).SingleOrDefault();
             }
             if (buscado is EnvioComun)
             {
                 comun = Context.Envios.OfType<EnvioComun>().Where(e => e.Tracking == tracking)
                    .Include(e => e.Agencia).Include(e => e.Agencia.Direccion).Include(e => e.EmpleadoResponable)
-                   .Include(e => e.Agencia.Ubicacion).Include(e => e.Agencia.Ciudad).Include(e => e.Comentarios).SingleOrDefault();
+                   .Include(e => e.Agencia.Ubicacion).Include(e => e.Agencia.Ciudad).Include(e => e.Comentarios).Include(a => a.Cliente).SingleOrDefault();
             }
 
             if (urgente != null)
@@ -151,16 +152,16 @@ namespace LogicaAccesoADatos.Repos
         public IEnumerable<Envio> FindAllLightByEmailCliente(string eCliente)
         {
             List<Envio> ret = new List<Envio>();
-            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Where(a => a.Cliente == eCliente).ToList());
-            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Where(a => a.Cliente == eCliente).ToList());
+            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(eCliente)).ToList());
+            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Cliente).Include(a => a.Ciudad).Where(a => a.Cliente.Email == new UsuarioEmail(eCliente)).ToList());
             return ret;
         }
 
         public IEnumerable<Envio> FindAllLightByComentario(string eCliente, string comentario)
         {
             List<Envio> ret = new List<Envio>();
-            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Where(a => a.Cliente == eCliente && a.Comentarios != null && a.Comentarios.Any(c => c.Comentario.ToLower().Contains(comentario.ToLower()))).ToList());
-            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Where(a => a.Cliente == eCliente && a.Comentarios != null && a.Comentarios.Any(c => c.Comentario.ToLower().Contains(comentario.ToLower()))).ToList());
+            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(eCliente) && a.Comentarios != null && a.Comentarios.Any(c => c.Comentario.ToLower().Contains(comentario.ToLower()))).ToList());
+            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(eCliente) && a.Comentarios != null && a.Comentarios.Any(c => c.Comentario.ToLower().Contains(comentario.ToLower()))).ToList());
             return ret;
         }
     }
