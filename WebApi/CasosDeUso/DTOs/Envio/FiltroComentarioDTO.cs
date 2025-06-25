@@ -10,8 +10,8 @@ namespace CasosDeUso.DTOs.Envio
 {
     public class FiltroComentarioDTO:IValidable
     {
-        public string Email { get; set; }
-        public string Comentario { get; set; }
+        public string? Email { get; set; }
+        public string? Comentario { get; set; }
 
         public void Validar()
         {
