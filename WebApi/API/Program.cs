@@ -51,7 +51,10 @@ namespace API
             builder.Services.AddScoped<IObtenerEnvioByTracking, ObtenerEnvioByTracking>();
             builder.Services.AddScoped<IObtenerEnviosByEmail, ObtenerEnviosByEmail>();
             builder.Services.AddScoped<IObtenerEnviosActivos, ObtenerEnviosActivos>();
-            
+            builder.Services.AddScoped<IObtenerEnvioByComentario, ObtenerEnvioByComentario>();
+            builder.Services.AddScoped<IObtenerEnviosByFecha, ObtenerEnviosByFecha>();
+
+
 
 
 
