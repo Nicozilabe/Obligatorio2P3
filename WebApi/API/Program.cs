@@ -44,14 +44,11 @@ namespace API
             //Casos de uso que miedo.
             builder.Services.AddScoped<ILogin, Login>();
             builder.Services.AddScoped<ICambiarContraseña, CambiarContrasena>();
-            builder.Services.AddScoped<IObtenerAgencias, ObtenerAgencias>();
-            builder.Services.AddScoped<IObtenerCiudades, ObtenerCiudades>();
 
             //Envíos
             builder.Services.AddScoped<IObtenerEnvio, ObtenerEnvio>();
             builder.Services.AddScoped<IObtenerEnvioByTracking, ObtenerEnvioByTracking>();
             builder.Services.AddScoped<IObtenerEnviosByEmail, ObtenerEnviosByEmail>();
-            builder.Services.AddScoped<IObtenerEnviosActivos, ObtenerEnviosActivos>();
             builder.Services.AddScoped<IObtenerEnvioByComentario, ObtenerEnvioByComentario>();
             builder.Services.AddScoped<IObtenerEnviosByFecha, ObtenerEnviosByFecha>();
 
