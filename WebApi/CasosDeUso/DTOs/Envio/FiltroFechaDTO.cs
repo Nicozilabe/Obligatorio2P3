@@ -17,6 +17,8 @@ namespace CasosDeUso.DTOs.Envio
 
         public string? Estado { get; set; }
 
+        public string? Email { get; set; }
+
         public void Validar()
         {
             if (FInicio == null && FFin == null && Estado == null)
@@ -32,6 +34,10 @@ namespace CasosDeUso.DTOs.Envio
             if((Estado != null)&& !(Estado == "Finalizado" || Estado == "En_Proceso"))
             {
                 throw new DatosInvalidosException("Estado no válido");
+            }
+            if (Email != null && string.IsNullOrEmpty(Email))
+            {
+                throw new DatosInvalidosException("El Email no puede quedar vacio.");
             }
 
         }
