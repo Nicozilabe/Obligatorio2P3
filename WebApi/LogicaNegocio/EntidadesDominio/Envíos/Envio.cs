@@ -20,7 +20,8 @@ namespace LogicaNegocio.EntidadesDominio.Envíos
         public int Tracking { get; set; }
         public int? EmpleadoResponableId { get; set; }
         public Empleado EmpleadoResponable { get; set; }
-        public string Cliente { get; set; }
+        public int? ClienteID { get; set; }
+        public Cliente Cliente { get; set; }
         public double Peso { get; set; }
         public DateTime? FechaEntrega { get; set; }
 
@@ -31,7 +32,7 @@ namespace LogicaNegocio.EntidadesDominio.Envíos
 
         public Envio() { }
 
-        public Envio(Empleado empleadoResponable, string cliente, double peso, TipoEstadoEnvio estadoEnvio)
+        public Envio(Empleado empleadoResponable, Cliente cliente, double peso, TipoEstadoEnvio estadoEnvio)
         {
             EmpleadoResponable = empleadoResponable;
             Cliente = cliente;
@@ -48,14 +49,6 @@ namespace LogicaNegocio.EntidadesDominio.Envíos
             if (EmpleadoResponable == null)
             {
                 throw new DatosInvalidosException("Empleado Responable no válida");
-            }
-            if (string.IsNullOrEmpty(Cliente))
-            {
-                throw new DatosInvalidosException("El Cliente no puede quedar vacio.");
-            }
-            if (Cliente.Length > 32)
-            {
-                throw new DatosInvalidosException("El Cliente debe tener menos de 32 letras");
             }
             if (Peso <= 0 || Peso == null)
             {

@@ -14,7 +14,7 @@ namespace LogicaNegocio.EntidadesDominio.Envíos
         public int? AgenciaId { get; set; }
         public Agencia Agencia { get; set; }
 
-        public EnvioComun(Empleado empleadoResponable, string cliente, double peso, TipoEstadoEnvio estadoEnvio, Agencia agencia) : base(empleadoResponable, cliente, peso, estadoEnvio)
+        public EnvioComun(Empleado empleadoResponable, Cliente cliente, double peso, TipoEstadoEnvio estadoEnvio, Agencia agencia) : base(empleadoResponable, cliente, peso, estadoEnvio)
         {
             Agencia = agencia;
         }
