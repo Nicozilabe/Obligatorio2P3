@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosDeUso.InterfacesCasosUso
 {
-    public interface IObtenerEnvio
+    public interface IObtenerEnviosByEmail
     {
-
-        public EnvioDTO getByID(int id);
-
+        public IEnumerable<EnvioLigthDTO> getEnviosByEmail(string email);
     }
 }

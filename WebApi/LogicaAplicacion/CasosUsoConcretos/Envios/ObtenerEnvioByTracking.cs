@@ -1,6 +1,5 @@
 ﻿using CasosDeUso.DTOs.Envio;
 using CasosDeUso.InterfacesCasosUso;
-using ExcepcionesPropias;
 using LogicaAplicacion.Mapeadores.Envios;
 using LogicaNegocio.EntidadesDominio.Envíos;
 using LogicaNegocio.InterfacesRepositorio;
@@ -12,32 +11,25 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUsoConcretos.Envios
 {
-    public class ObtenerEnvio : IObtenerEnvio
+    public class ObtenerEnvioByTracking : IObtenerEnvioByTracking
     {
 
         IRepositorioEnvios repoEnvios { get; set; }
 
-        public ObtenerEnvio(IRepositorioEnvios repoEnvios)
+        public ObtenerEnvioByTracking(IRepositorioEnvios repoEnvios)
         {
             this.repoEnvios = repoEnvios;
         }
-
-        public EnvioDTO getByID(int id)
+        public EnvioDTO getByTracking(int tracking)
         {
-            if (id <= 0)
+            EnvioDTO envio = null;
+
+            Envio en = repoEnvios.FindByTracking(tracking);
+            if (en != null)
             {
-                throw new DatosInvalidosException("El id no puede ser menor o igual a cero");
+                envio = MapperEnvio.ToDTO(en);
             }
-            var envio = repoEnvios.FindById(id);
-
-            EnvioDTO ret = null;
-            if (envio != null) {
-                ret = MapperEnvio.ToDTO(envio);
-            }
-
-            return ret;
-
+            return envio;
         }
- 
     }
 }

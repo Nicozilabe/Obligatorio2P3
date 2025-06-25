@@ -46,7 +46,12 @@ namespace API
             builder.Services.AddScoped<IObtenerAgencias, ObtenerAgencias>();
             builder.Services.AddScoped<IObtenerCiudades, ObtenerCiudades>();
 
+            //Envíos
             builder.Services.AddScoped<IObtenerEnvio, ObtenerEnvio>();
+            builder.Services.AddScoped<IObtenerEnvioByTracking, ObtenerEnvioByTracking>();
+            builder.Services.AddScoped<IObtenerEnviosByEmail, ObtenerEnviosByEmail>();
+            builder.Services.AddScoped<IObtenerEnviosActivos, ObtenerEnviosActivos>();
+            
 
 
 

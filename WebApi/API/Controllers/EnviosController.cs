@@ -1,6 +1,7 @@
 ﻿using CasosDeUso.DTOs.Envio;
 using CasosDeUso.InterfacesCasosUso;
 using ExcepcionesPropias;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,10 +14,18 @@ namespace API.Controllers
     {
 
         IObtenerEnvio CUObtenerEnvio { get; set; }
+        IObtenerEnviosActivos CUObtenerEnviosActivos { get; set; }
+        IObtenerEnvioByTracking CUObtenerEnvioByTracking { get; set; }
+        IObtenerEnvioByComentario CUObtenerEnvioByComentario { get; set; }
+        IObtenerEnviosByEmail CUObtenerEnviosByEmail { get; set; }
 
-        public EnviosController(IObtenerEnvio cuObtenerEnvio)
+        public EnviosController(IObtenerEnvio cuObtenerEnvio, IObtenerEnviosActivos cUObtenerEnviosActivos, IObtenerEnvioByTracking cUObtenerEnvioByTracking, IObtenerEnvioByComentario cUObtenerEnvioByComentario, IObtenerEnviosByEmail cUObtenerEnviosByEmail)
         {
             CUObtenerEnvio = cuObtenerEnvio;
+            CUObtenerEnviosActivos = cUObtenerEnviosActivos;
+            CUObtenerEnvioByTracking = cUObtenerEnvioByTracking;
+            CUObtenerEnvioByComentario = cUObtenerEnvioByComentario;
+            CUObtenerEnviosByEmail = cUObtenerEnviosByEmail;
         }
 
         [HttpGet("BuscarPorTracking/{tracking}")]
@@ -28,7 +37,7 @@ namespace API.Controllers
             }
             try
             {
-                EnvioDTO e = CUObtenerEnvio.getByTracking(tracking);
+                EnvioDTO e = CUObtenerEnvioByTracking.getByTracking(tracking);
                 if (e == null)
                 {
                     return NotFound("El envio con tracking=" + tracking + " no existe");
@@ -42,7 +51,7 @@ namespace API.Controllers
         }
 
         [HttpGet("BuscarPorCliente")]
-        //[Authorize(Roles ="Cliente")]
+        [Authorize(Roles = "Cliente")]
         public IActionResult GetByEmail([FromQuery]string Email)
         {
             if (string.IsNullOrEmpty(Email))
@@ -51,7 +60,7 @@ namespace API.Controllers
             }
             try
             {
-                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnvio.getEnviosByEmail(Email);
+                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnviosByEmail.getEnviosByEmail(Email);
                 if (envios == null || !envios.Any())
                 {
                     return NotFound("No se encontraron envíos para el cliente con email: " + Email);
@@ -73,7 +82,7 @@ namespace API.Controllers
         }
 
         [HttpGet("BuscarPorComentario")]
-        //[Authorize(Roles ="Cliente")]
+        [Authorize(Roles = "Cliente")]
         public IActionResult GetByComentariol([FromQuery]FiltroComentarioDTO datos)
         {
             if (datos == null)
@@ -84,7 +93,7 @@ namespace API.Controllers
             try
             {
                 datos.Validar();
-                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnvio.getEnviosByComentario(datos);
+                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnvioByComentario.getEnviosByComentario(datos);
                 if (envios == null || !envios.Any())
                 {
                     return NotFound("No se encontraron envíos para el cliente con email: " + datos.Email + " y comentario " + datos.Comentario);
@@ -106,7 +115,7 @@ namespace API.Controllers
         }
 
         [HttpGet("BuscarPorID/{id}")]
-        //[Authorize(Roles ="Cliente")]
+        [Authorize(Roles = "Cliente")]
         public IActionResult GetByID(int id)
         {
             if (id <= 0)

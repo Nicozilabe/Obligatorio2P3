@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosDeUso.InterfacesCasosUso
 {
-    public interface IObtenerEnvio
+    public interface IObtenerEnvioByComentario
     {
-
-        public EnvioDTO getByID(int id);
-
+        public IEnumerable<EnvioLigthDTO> getEnviosByComentario(FiltroComentarioDTO datos);
     }
 }

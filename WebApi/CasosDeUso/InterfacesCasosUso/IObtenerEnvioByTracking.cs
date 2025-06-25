@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace CasosDeUso.InterfacesCasosUso
 {
-    public interface IObtenerEnvio
+    public interface IObtenerEnvioByTracking
     {
-
-        public EnvioDTO getByID(int id);
-
+        public EnvioDTO getByTracking(int tracking);
     }
 }
