@@ -167,18 +167,25 @@ namespace LogicaAccesoADatos.Repos
 
         public IEnumerable<Envio> FindByFecha(string email, DateTime? fechaDesde, DateTime? fechaHasta, string? estado)
         {
-            List<Envio> ret = new List<Envio>();
-            ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(email)));
-            ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Cliente).Include(a => a.Ciudad).Where(a => a.Cliente.Email == new UsuarioEmail(email)));
+            IEnumerable<Envio> ret = new List<Envio>();
+            ret = ret.Concat(Context.EnviosComunes.Include(a => a.Agencia).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(email)));
+            ret = ret.Concat(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Cliente).Include(a => a.Ciudad).Where(a => a.Cliente.Email == new UsuarioEmail(email)));
 
             if (fechaDesde.HasValue)
             {
-                ret = ret.Where(e => e.FechaRegistroEnvio >= fechaDesde.Value).ToList();
+                ret = ret.Where(e => e.FechaRegistroEnvio >= fechaDesde.Value);
             }
             if (fechaHasta.HasValue)
             {
-                ret = ret.Where(e => e.FechaRegistroEnvio.Date <= fechaHasta.Value).ToList();
+                ret = ret.Where(e => e.FechaRegistroEnvio.Date <= fechaHasta.Value);
             }
+            if (!string.IsNullOrEmpty(estado))
+            {
+                ret = ret.Where(e => e.EstadoEnvio.ToString().ToLower() == estado.ToLower());
+            }
+
+            return ret.ToList();
+
         }
     }
 }
