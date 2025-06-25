@@ -29,5 +29,10 @@ namespace LogicaNegocio.ValueObjects.Usuario
                 throw new DatosInvalidosException("El email debe tener hasta 86 caracteres.");
             }
         }
+
+        public override string ToString()
+        {
+            return Email;
+        }
     }
 }
