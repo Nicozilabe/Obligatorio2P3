@@ -21,9 +21,9 @@ namespace CasosDeUso.DTOs.Envio
 
         public void Validar()
         {
-            if (FInicio == null && FFin == null && Estado == null)
+            if (FInicio == null && FFin == null)
             {
-                throw new DatosInvalidosException("Debe ingresar al menos una fecha o un estado para filtrar.");
+                throw new DatosInvalidosException("Debe ingresar al menos una fecha para filtrar.");
             }
 
             if(FFin != null && FInicio != null && FInicio < FFin)
