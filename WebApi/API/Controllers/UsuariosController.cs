@@ -1,4 +1,5 @@
 ﻿using API.JWT;
+using CasosDeUso.DTOs.Envio;
 using CasosDeUso.DTOs.Usuarios;
 using CasosDeUso.InterfacesCasosUso;
 using ExcepcionesPropias;
@@ -22,8 +23,15 @@ namespace API.Controllers
             CuCambioContrasena = cuCambioContrasena;
         }
 
-
+        /// <summary>
+        /// Permite iniciar sesión.
+        /// </summary>
+        /// <param name="datos">Email y Password del cliente que busca iniciar sesión.</param>
+        /// <returns>Datos del cliente que busca iniciar sesión o código de error</returns>
         [HttpPost("login")]
+        [ProducesResponseType(typeof(String), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status500InternalServerError)]
         public ActionResult Login([FromBody] LoginDTO datos)
         {
             if (datos == null)
@@ -64,8 +72,19 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Permite cambiar contraseña del usuario dado
+        /// </summary>
+        /// <param name="datos">Email y Password vieja y nueva acambiar.</param>
+        /// <returns>Ok o error.</returns>
         [HttpPut("ChngPass")]
         [Authorize(Roles = "Cliente")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status500InternalServerError)]
         public ActionResult CambiarContrasena([FromBody]CambioContrasenaDTO datos)
         {
             if (datos == null)
