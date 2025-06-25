@@ -163,5 +163,10 @@ namespace LogicaAccesoADatos.Repos
             ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Where(a => a.Cliente == eCliente && a.Comentarios != null && a.Comentarios.Any(c => c.Comentario.ToLower().Contains(comentario.ToLower()))).ToList());
             return ret;
         }
+
+        public IEnumerable<Envio> FindByFecha(string email, DateOnly? fechaDesde, DateOnly? fechaHasta, string? estado)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
