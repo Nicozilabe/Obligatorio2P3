@@ -148,31 +148,63 @@ namespace WebMVC.Controllers
                 return View(new List<EnvioLigthDTO>());
             }
         }
+
         [HttpGet]
-        public ActionResult DetallesBusquedaComentario(int id)
+        public ActionResult BuscarPorFecha()
         {
-            EnvioDTO dto = null;
+            ViewBag.Estados = new List<string> { "", "En_Proceso", "Finalizado" };
+            ViewBag.FInicio = "";
+            ViewBag.FFin = "";
+            ViewBag.EstadoSelect = "";
+            return View(new List<EnvioLigthDTO>());
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BuscarPorFecha(DateTime fInicio, DateTime fFin, string estado)
+        {
+            ViewBag.Estados = new List<string> { "", "En_Proceso", "Finalizado" };
+            ViewBag.FInicio = fInicio.ToString("yyyy-MM-dd") ?? "";
+            ViewBag.FFin = fFin.ToString("yyyy-MM-dd") ?? "";
+            ViewBag.EstadoSelect = estado ?? "";
+            if (fInicio == null && fFin == null )
+            {
+                ViewBag.Error = "Debe ingresar fechas válidas.";
+                return View(new List<EnvioLigthDTO>());
+            }
+            if (fInicio > fFin)
+            {
+                ViewBag.Error = "La fecha de fin tiene que ser mayor a la fecha de inicio.";
+                return View(new List<EnvioLigthDTO>());
+            }
+
+            string email = HttpContext.Session.GetString("LogEmail");
             string token = HttpContext.Session.GetString("LogToken");
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Usuarios");
+            }
             try
             {
-                var resp = AuxiliarClienteHttp.EnviarSolicitud($"{URLApi}BuscarPorId/{id}", "get", null, token);
+
+                var url = $"{URLApi}BuscarPorFecha?Email={email}&FInicio={fInicio:yyyy-MM-dd}&FFin={fFin:yyyy-MM-dd}&Estado={estado}";
+                var resp = AuxiliarClienteHttp.EnviarSolicitud(url, "get", null, token);
                 string body = AuxiliarClienteHttp.ObtenerBody(resp);
-                if (resp.IsSuccessStatusCode)
+                if (!resp.IsSuccessStatusCode)
                 {
-                    dto = JsonConvert.DeserializeObject<EnvioDTO>(body);
+                    ViewBag.Error = $"Error API: {resp.StatusCode} - {body}";
+                    return View(new List<EnvioLigthDTO>());
                 }
-                else
-                {
-                    ViewBag.Error = "No se pudo obtener los detalles del envio.";
-                    return View("DetallesBusquedaComentario", null);
-                }
+                var lista = JsonConvert
+                    .DeserializeObject<List<EnvioLigthDTO>>(body)
+                    .OrderBy(e => e.Tracking)
+                    .ToList();
+                return View(lista);
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Ocurrio un error en la obtencion del envio";
-                return View("DetallesBusquedaComentario", null);
+                ViewBag.Error = "Ocurrio un error en la obtencion del envio " + ex.Message; ;
+                return View(new List<EnvioLigthDTO>());
             }
-            return View("DetallesBusquedaComentario", dto);
         }
     }
 }
