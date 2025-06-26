@@ -20,7 +20,7 @@ namespace LogicaNegocio.ValueObjects.Usuario
             Nombre = nombre;
             Apellido = apellido;
         }
-
+        protected UsuarioNombre() { }
         public void Validar()
         {
             if (string.IsNullOrEmpty(Nombre))

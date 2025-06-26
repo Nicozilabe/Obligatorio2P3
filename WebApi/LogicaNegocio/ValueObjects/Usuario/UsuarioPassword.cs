@@ -17,6 +17,7 @@ namespace LogicaNegocio.ValueObjects.Usuario
         public UsuarioPassword(string password) { 
             Password = password;
         }
+        protected UsuarioPassword() { }
         public void Validar()
         {
             if (string.IsNullOrEmpty(Password))
