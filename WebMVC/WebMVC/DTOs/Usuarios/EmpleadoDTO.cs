@@ -57,7 +57,6 @@ namespace WebMVC.DTOs.Usuarios
                     throw new Exception("La contraseña debe tener menos de 32 letras");
                 }
             }
-            
             if (Rol != "Empleado" && Rol != "Administrador")
             {
                 throw new Exception("Tipo Usuario no válido");
