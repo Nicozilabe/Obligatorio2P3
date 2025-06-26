@@ -40,7 +40,5 @@ namespace CasosDeUso.DTOs.Envio
         {
             return $"{Nombre}, {Ciudad}, {Direccion}";
         }
-
-
     }
 }

@@ -12,7 +12,6 @@ namespace CasosDeUso.DTOs.Envio
 {
     public class DireccionDTO : IValidable
     {
-
         [Required(ErrorMessage = "El campo es obligatorio.")]
         [StringLength(32, ErrorMessage = "Calle no puede superar los 32 caracteres.")]
         public string Calle { get; set; }
@@ -41,10 +40,6 @@ namespace CasosDeUso.DTOs.Envio
             {
                 throw new DatosInvalidosException("Número-Dirección Debe ser un valor entre 1 y 99999");
             }
-            //if (Ciudad == null)
-            //{
-            //    throw new DatosInvalidosException("Ciudad no válida");
-            //}
         }
 
         public override string ToString()

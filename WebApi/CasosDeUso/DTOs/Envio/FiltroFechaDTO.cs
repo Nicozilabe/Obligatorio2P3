@@ -10,13 +10,9 @@ namespace CasosDeUso.DTOs.Envio
 {
     public class FiltroFechaDTO:IValidable
     {
-
         public DateTime? FInicio { get; set; }
-
         public DateTime? FFin { get; set; }
-
         public string? Estado { get; set; }
-
         public string? Email { get; set; }
 
         public void Validar()
@@ -25,12 +21,10 @@ namespace CasosDeUso.DTOs.Envio
             {
                 throw new DatosInvalidosException("Debe ingresar al menos una fecha para filtrar.");
             }
-
             if(FFin != null && FInicio != null && FInicio > FFin)
             {
                 throw new DatosInvalidosException("La fecha de inicio no puede ser superior a la de fin.");
             }
-
             if((Estado != null)&& !(Estado == "Finalizado" || Estado == "En_Proceso"))
             {
                 throw new DatosInvalidosException("Estado no válido");
@@ -39,7 +33,6 @@ namespace CasosDeUso.DTOs.Envio
             {
                 throw new DatosInvalidosException("El Email no puede quedar vacio.");
             }
-
         }
     }
 }
