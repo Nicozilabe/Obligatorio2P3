@@ -14,9 +14,7 @@ namespace LogicaNegocio.EntidadesDominio.Usuarios
     public abstract class Usuario
     {
         public int Id { get; set; }
-        
         public UsuarioNombre Nombre { get; set; }
-
         public UsuarioEmail Email { get; set; }
         public UsuarioPassword Password { get; set; }
         public bool Activo { get; set; }
@@ -31,7 +29,6 @@ namespace LogicaNegocio.EntidadesDominio.Usuarios
             Password = password;
             Activo = true;
             Validar();
-            
         }
         public virtual void Validar()
         {
