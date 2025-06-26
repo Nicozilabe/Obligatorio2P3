@@ -11,7 +11,5 @@ namespace ExcepcionesPropias
         public OperacionConflictivaExeption() { }
         public OperacionConflictivaExeption(string mensaje) : base(mensaje) { }
         public OperacionConflictivaExeption(string mensaje, Exception interna) : base(mensaje, interna) { }
-
     }
-
 }
