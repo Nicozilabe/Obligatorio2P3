@@ -62,7 +62,6 @@ namespace LogicaAplicacion.Mapeadores.Usuarios
                 ret.Apellido = usuario.Nombre.Apellido;
                 ret.Email = usuario.Email.Email;
                 ret.Activo = usuario.Activo;
-
             }
             return ret;
         }

@@ -57,7 +57,7 @@ namespace LogicaAplicacion.Mapeadores.Usuarios
                 ret.Apellido = empleado.Nombre.Apellido;
                 ret.Email = empleado.Email.Email;
                 ret.Activo = empleado.Activo;
-//No madar la pass a las vistas
+                //No madar la pass a las vistas
                 ret.Password = null;
             }
             return ret;
@@ -73,7 +73,6 @@ namespace LogicaAplicacion.Mapeadores.Usuarios
             }
             return DTOs;
         }
-
 
         public static EmpleadoSeguroDTO ToEmpleadoSeguroDTO(Empleado empleado)
         {
@@ -98,7 +97,6 @@ namespace LogicaAplicacion.Mapeadores.Usuarios
                 ret.Apellido = empleado.Nombre.Apellido;
                 ret.Email = empleado.Email.Email;
                 ret.Activo = empleado.Activo;
-                
             }
             return ret;
         }
