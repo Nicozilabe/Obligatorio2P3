@@ -17,7 +17,6 @@ namespace LogicaAplicacion.Mapeadores.Envios
 {
     public class MapperEnvio
     {
-
         public static EnvioDTO ToDTO(Envio e)
         {
             EnvioDTO ret = new EnvioDTO();
@@ -47,7 +46,6 @@ namespace LogicaAplicacion.Mapeadores.Envios
 
             return ret;
         }
-
    
         public static EnvioLigthDTO ToEnvioLigthDTO(Envio e)
         {
@@ -71,7 +69,6 @@ namespace LogicaAplicacion.Mapeadores.Envios
                 {
                     ret.Destino = "No se pudo obtener el destino.";  
                 }
-                      
             }
             else if (e is EnvioUrgente)
             {
@@ -85,7 +82,6 @@ namespace LogicaAplicacion.Mapeadores.Envios
                 {
                     ret.Destino = "No se pudo obtener el destino.";
                 }
-                
             }
             ret.Empleado = MappersEmpleado.ToEmpleadoDTO(e.EmpleadoResponable);
             return ret;
@@ -101,7 +97,5 @@ namespace LogicaAplicacion.Mapeadores.Envios
             }
             return DTOs;
         }
-
-
     }
 }

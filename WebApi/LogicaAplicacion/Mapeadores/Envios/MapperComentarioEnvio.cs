@@ -7,7 +7,6 @@ namespace LogicaAplicacion.Mapeadores.Envios
 {
     public class MapperComentarioEnvio
     {
-
         public static ComentarioEnvioDTO ToDTO(ComentarioEnvio comentario)
         {
             ComentarioEnvioDTO ret = new ComentarioEnvioDTO
@@ -26,9 +25,7 @@ namespace LogicaAplicacion.Mapeadores.Envios
             {
                 Fecha = comentarioDTO.Fecha,
                 Comentario = comentarioDTO.Comentario,
-                
             };
-
             return ret;
         }
 
