@@ -9,8 +9,6 @@ namespace CasosDeUso.InterfacesCasosUso
 {
     public interface IObtenerEnvio
     {
-
         public EnvioDTO getByID(int id);
-
     }
 }

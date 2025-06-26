@@ -10,6 +10,5 @@ namespace CasosDeUso.InterfacesCasosUso
     public interface ICambiarContraseña
     {
         public void CambiarContraseña(CambioContrasenaDTO datos);
-
     }
 }
