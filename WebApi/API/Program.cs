@@ -32,13 +32,8 @@ namespace API
             //Inyecciones
 
             //Repositorios
-            builder.Services.AddScoped<IRepositorioEmpleados, RepositorioEmpleados>();
             builder.Services.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
-            builder.Services.AddScoped<IRepositorioAcciones, RepositorioAcciones>();
-            builder.Services.AddScoped<IRepositorioAgencias, RepositorioAgencias>();
-            builder.Services.AddScoped<IRepositorioCiudades, RepositorioCiudades>();
             builder.Services.AddScoped<IRepositorioEnvios, RepositorioEnvios>();
-            builder.Services.AddScoped<IRepositorioComentarios, RepositorioComentarios>();
 
 
             //Casos de uso que miedo.
