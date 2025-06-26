@@ -3,7 +3,6 @@ using CasosDeUso.InterfacesCasosUso;
 using ExcepcionesPropias;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace API.Controllers
@@ -12,9 +11,7 @@ namespace API.Controllers
     [ApiController]
     public class EnviosController : ControllerBase
     {
-
         IObtenerEnvio CUObtenerEnvio { get; set; }
-
         IObtenerEnvioByTracking CUObtenerEnvioByTracking { get; set; }
         IObtenerEnvioByComentario CUObtenerEnvioByComentario { get; set; }
         IObtenerEnviosByEmail CUObtenerEnviosByEmail { get; set; }
@@ -147,7 +144,6 @@ namespace API.Controllers
             }
         }
 
-
         /// <summary>
         /// Permite buscar envíos por su código Id.
         /// </summary>
@@ -189,7 +185,6 @@ namespace API.Controllers
                 return StatusCode(500, "Ocurrió un error, intente nuevamente más tarde");
             }
         }
-
 
         /// <summary>
         /// Permite buscar envíos por fecha y estado.

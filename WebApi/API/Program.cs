@@ -1,4 +1,3 @@
-
 using CasosDeUso.InterfacesCasosUso;
 using LogicaAccesoADatos.EF;
 using LogicaAccesoADatos.Repos;
@@ -20,7 +19,6 @@ namespace API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -28,13 +26,11 @@ namespace API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
             //Inyecciones
 
             //Repositorios
             builder.Services.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
             builder.Services.AddScoped<IRepositorioEnvios, RepositorioEnvios>();
-
 
             //Casos de uso que miedo.
             builder.Services.AddScoped<ILogin, Login>();
@@ -47,10 +43,6 @@ namespace API
             builder.Services.AddScoped<IObtenerEnvioByComentario, ObtenerEnvioByComentario>();
             builder.Services.AddScoped<IObtenerEnviosByFecha, ObtenerEnviosByFecha>();
 
-
-
-
-
             //DB
             builder.Services.AddDbContext<EmpresaContext>(options =>
                 options.UseSqlServer(
@@ -59,17 +51,12 @@ namespace API
                 )
             );
 
-
             //CAMBIAMOS LO ANTERIOR POR ESTO PARA PODER AUTENTICAR CON JWT EN SWAGGER:
-
             builder.Services.AddSwaggerGen(options =>
             {
-
                 var archivo = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var ruta = Path.Combine(AppContext.BaseDirectory, archivo);
                 options.IncludeXmlComments(ruta);
-
-
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
@@ -77,7 +64,6 @@ namespace API
                     Type = SecuritySchemeType.Http,
                     Scheme = "Bearer"
                 });
-
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -93,13 +79,10 @@ namespace API
         }
     });
             });
-
             //////// FIN CÓDIGO PARA JWT EN SWAGGER
-
-
+            
 
             //////////////// INICIO CÓDIGO PARA CONFIGURAR USO DE JWT
-
             var claveSecreta = "ZWRpw6fDo28gZW0gY29tcHV0YWRvcmE=";
 
             builder.Services.AddAuthentication(aut =>
@@ -120,12 +103,7 @@ namespace API
                     ValidateAudience = false
                 };
             });
-
             //////////////// FIN CÓDIGO PARA CONFIGURAR USO DE JWT
-            ///
-
-
-
 
             var app = builder.Build();
 
@@ -137,7 +115,6 @@ namespace API
             }
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
