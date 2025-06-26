@@ -14,16 +14,15 @@ namespace API.Controllers
     {
 
         IObtenerEnvio CUObtenerEnvio { get; set; }
-        IObtenerEnviosActivos CUObtenerEnviosActivos { get; set; }
+
         IObtenerEnvioByTracking CUObtenerEnvioByTracking { get; set; }
         IObtenerEnvioByComentario CUObtenerEnvioByComentario { get; set; }
         IObtenerEnviosByEmail CUObtenerEnviosByEmail { get; set; }
         IObtenerEnviosByFecha CUObtenerEnviosByFecha { get; set; }
 
-        public EnviosController(IObtenerEnvio cuObtenerEnvio, IObtenerEnviosActivos cUObtenerEnviosActivos, IObtenerEnvioByTracking cUObtenerEnvioByTracking, IObtenerEnvioByComentario cUObtenerEnvioByComentario, IObtenerEnviosByEmail cUObtenerEnviosByEmail, IObtenerEnviosByFecha cUObtenerEnviosByFecha)
+        public EnviosController(IObtenerEnvio cuObtenerEnvio, IObtenerEnvioByTracking cUObtenerEnvioByTracking, IObtenerEnvioByComentario cUObtenerEnvioByComentario, IObtenerEnviosByEmail cUObtenerEnviosByEmail, IObtenerEnviosByFecha cUObtenerEnviosByFecha)
         {
             CUObtenerEnvio = cuObtenerEnvio;
-            CUObtenerEnviosActivos = cUObtenerEnviosActivos;
             CUObtenerEnvioByTracking = cUObtenerEnvioByTracking;
             CUObtenerEnvioByComentario = cUObtenerEnvioByComentario;
             CUObtenerEnviosByEmail = cUObtenerEnviosByEmail;

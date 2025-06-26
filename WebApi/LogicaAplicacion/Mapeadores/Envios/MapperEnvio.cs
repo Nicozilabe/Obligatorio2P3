@@ -17,38 +17,6 @@ namespace LogicaAplicacion.Mapeadores.Envios
 {
     public class MapperEnvio
     {
-        public static EnvioComun RegistroDTOToEnvioComun(RegistroEnvioDTO dto, Empleado EmpleadoResponsable, Agencia agencia)
-        {
-            EnvioComun ret = new EnvioComun();
-            if (dto == null)
-            {
-                throw new DatosInvalidosException("El DTO de registro de envío no puede ser nulo");
-            }
-
-            ret.EstadoEnvio = TipoEstadoEnvio.En_Proceso;
-            ret.EmpleadoResponable = EmpleadoResponsable;
-            
-            ret.Peso = dto.Peso;
-
-            ret.Agencia = agencia;
-            return ret;
-        }
-        public static EnvioUrgente RegistroDTOToEnvioUrgente(RegistroEnvioDTO dto, Empleado EmpleadoResponsable, DireccionPostal di, Ciudad c)
-        {
-            EnvioUrgente ret = new EnvioUrgente();
-            if (dto == null)
-            {
-                throw new DatosInvalidosException("El DTO de registro de envío no puede ser nulo");
-            }
-
-            ret.EstadoEnvio = TipoEstadoEnvio.En_Proceso;
-            ret.EmpleadoResponable = EmpleadoResponsable;
-            
-            ret.Peso = dto.Peso;
-            ret.Ciudad = c;
-            ret.Direccion = di;
-            return ret;
-        }
 
         public static EnvioDTO ToDTO(Envio e)
         {
