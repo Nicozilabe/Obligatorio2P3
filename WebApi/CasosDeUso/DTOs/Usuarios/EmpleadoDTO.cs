@@ -59,7 +59,6 @@ namespace CasosDeUso.DTOs.Usuarios
                     throw new DatosInvalidosException("La contraseña debe tener menos de 32 letras");
                 }
             }
-            
             if (Rol != "Empleado" && Rol != "Administrador")
             {
                 throw new DatosInvalidosException("Tipo Usuario no válido");
