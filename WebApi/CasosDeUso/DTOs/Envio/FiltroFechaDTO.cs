@@ -26,9 +26,9 @@ namespace CasosDeUso.DTOs.Envio
                 throw new DatosInvalidosException("Debe ingresar al menos una fecha para filtrar.");
             }
 
-            if(FFin != null && FInicio != null && FInicio < FFin)
+            if(FFin != null && FInicio != null && FInicio > FFin)
             {
-                throw new DatosInvalidosException("La fecha de fin no puede ser superior a la de inicio.");
+                throw new DatosInvalidosException("La fecha de inicio no puede ser superior a la de fin.");
             }
 
             if((Estado != null)&& !(Estado == "Finalizado" || Estado == "En_Proceso"))
