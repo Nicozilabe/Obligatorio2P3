@@ -56,6 +56,10 @@ namespace WebMVC.Controllers
         //GET envios listar mis ewnvios
         public ActionResult ListarMisEnvios()
         {
+            if (!(HttpContext.Session.GetString("LogRol") == "Cliente"))
+            {
+                return RedirectToAction("NoAutorizado", "Auth");
+            }
             List<EnvioLigthDTO> envios = new List<EnvioLigthDTO>();
             string email = HttpContext.Session.GetString("LogEmail");
             string token = HttpContext.Session.GetString("LogToken");
@@ -80,6 +84,10 @@ namespace WebMVC.Controllers
         [HttpGet]
         public ActionResult DetallesEnvio(int id)
         {
+            if (!(HttpContext.Session.GetString("LogRol") == "Cliente"))
+            {
+                return RedirectToAction("NoAutorizado", "Auth");
+            }
             EnvioDTO dto = null;
             string token = HttpContext.Session.GetString("LogToken");
             try
@@ -105,6 +113,10 @@ namespace WebMVC.Controllers
         [HttpGet]
         public ActionResult BuscarPorComentario()
         {
+            if (!(HttpContext.Session.GetString("LogRol") == "Cliente"))
+            {
+                return RedirectToAction("NoAutorizado", "Auth");
+            }
             ViewBag.Comentario = "";
             return View();
         }
@@ -112,6 +124,10 @@ namespace WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BuscarPorComentario(string comentario)
         {
+            if (!(HttpContext.Session.GetString("LogRol") == "Cliente"))
+            {
+                return RedirectToAction("NoAutorizado", "Auth");
+            }
             ViewBag.Comentario = comentario ?? "";
             if (string.IsNullOrEmpty(comentario))
             {
@@ -152,6 +168,9 @@ namespace WebMVC.Controllers
         [HttpGet]
         public ActionResult BuscarPorFecha()
         {
+            if(!(HttpContext.Session.GetString("LogRol") == "Cliente")){
+                return RedirectToAction("NoAutorizado", "Auth");
+            }
             ViewBag.Estados = new List<string> { "", "En_Proceso", "Finalizado" };
             ViewBag.FInicio = "";
             ViewBag.FFin = "";
@@ -162,6 +181,10 @@ namespace WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BuscarPorFecha(DateTime fInicio, DateTime fFin, string estado)
         {
+            if (!(HttpContext.Session.GetString("LogRol") == "Cliente"))
+            {
+                return RedirectToAction("NoAutorizado", "Auth");
+            }
             ViewBag.Estados = new List<string> { "", "En_Proceso", "Finalizado" };
             ViewBag.FInicio = fInicio.ToString("yyyy-MM-dd") ?? "";
             ViewBag.FFin = fFin.ToString("yyyy-MM-dd") ?? "";
