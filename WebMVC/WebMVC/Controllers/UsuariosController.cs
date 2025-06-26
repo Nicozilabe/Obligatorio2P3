@@ -64,6 +64,10 @@ namespace WebMVC.Controllers
         [HttpGet]
         public ActionResult ChngPass()
         {
+            if (!(HttpContext.Session.GetString("LogRol") == "Cliente"))
+            {
+                return RedirectToAction("NoAutorizado", "Auth");
+            }
             string email = HttpContext.Session.GetString("LogEmail");
             if (string.IsNullOrEmpty(email))
             {
@@ -80,6 +84,10 @@ namespace WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ChngPass(string passVieja, string passNueva, string passNuevaConfirmacion)
         {
+            if (!(HttpContext.Session.GetString("LogRol") == "Cliente"))
+            {
+                return RedirectToAction("NoAutorizado", "Auth");
+            }
             string email = HttpContext.Session.GetString("LogEmail");
             if (string.IsNullOrEmpty(email))
             {
