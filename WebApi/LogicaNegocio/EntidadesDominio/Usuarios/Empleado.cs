@@ -11,7 +11,5 @@ namespace LogicaNegocio.EntidadesDominio.Usuarios
     {
         public Empleado() { }
         public Empleado(UsuarioNombre nombre, UsuarioEmail email, UsuarioPassword password) : base(nombre, email, password) { }
-
-
     }
 }

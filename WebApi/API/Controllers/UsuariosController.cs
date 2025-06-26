@@ -14,7 +14,6 @@ namespace API.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-
         public ILogin CULogin { get; set; }
         public ICambiarContraseña CuCambioContrasena { get; set; }
 
@@ -53,10 +52,9 @@ namespace API.Controllers
                 if (user == null) {
                     return Unauthorized("Credenciales inválidas");
                 }
+
                 string token = ManejadorJWT.GenerarToken(user);
-
                 var contenido = new { Email = user.Email, Rol = user.Rol, Token = token };
-
                 return Ok(contenido);
             }
             catch (DatosInvalidosException ex)
@@ -89,17 +87,15 @@ namespace API.Controllers
         public ActionResult CambiarContrasena([FromBody]CambioContrasenaDTO datos)
         {
             string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-
             if(email != datos.Email)
             {
                 return BadRequest("El email del token no coincide con el email del usuario.");
             }
-
-
             if (datos == null)
             {
                 return BadRequest("Error datos cambio contraseña.");
             }
+            
             try
             {
                 datos.Validar();
@@ -121,10 +117,6 @@ namespace API.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Ha ocurrido un error inesperado.");
             }
-
-
         }
-
-
     }
 }

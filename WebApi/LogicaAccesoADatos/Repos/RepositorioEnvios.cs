@@ -16,7 +16,6 @@ namespace LogicaAccesoADatos.Repos
 {
     public class RepositorioEnvios : IRepositorioEnvios
     {
-
         public EmpresaContext Context { get; set; }
 
         public RepositorioEnvios(EmpresaContext context)
@@ -57,7 +56,6 @@ namespace LogicaAccesoADatos.Repos
             EnvioUrgente urgente = null;
             EnvioComun comun = null;
 
-
             if ( buscado is EnvioUrgente)
             {
                  urgente = Context.Envios.OfType<EnvioUrgente>().Where(e => e.Id == id).Include(a => a.Cliente).Include(e => e.Ciudad).Include(e => e.Direccion).Include(e => e.EmpleadoResponable).Include(e => e.Comentarios).SingleOrDefault();
@@ -81,7 +79,6 @@ namespace LogicaAccesoADatos.Repos
             {
                 return buscado;
             }
-
         }
 
         public void Remove(int id)
@@ -97,7 +94,6 @@ namespace LogicaAccesoADatos.Repos
             }
             obj.Validar();
             Envio aEditar = FindById(obj.Id);
-
             //if (aEditar.FechaEntrega == obj.FechaEntrega && aEditar.EstadoEnvio == obj.EstadoEnvio && aEditar.FechaRegistroEnvio == obj.FechaRegistroEnvio &&
             //    aEditar.Comentarios == obj.Comentarios)
             //{
@@ -123,7 +119,6 @@ namespace LogicaAccesoADatos.Repos
             EnvioUrgente urgente = null;
             EnvioComun comun = null;
 
-
             if (buscado is EnvioUrgente)
             {
                 urgente = Context.Envios.OfType<EnvioUrgente>().Where(e => e.Tracking == tracking).Include(e => e.Ciudad).Include(e => e.Direccion).Include(e => e.EmpleadoResponable).Include(e => e.Comentarios).Include(a => a.Cliente).SingleOrDefault();
@@ -134,7 +129,6 @@ namespace LogicaAccesoADatos.Repos
                    .Include(e => e.Agencia).Include(e => e.Agencia.Direccion).Include(e => e.EmpleadoResponable)
                    .Include(e => e.Agencia.Ubicacion).Include(e => e.Agencia.Ciudad).Include(e => e.Comentarios).Include(a => a.Cliente).SingleOrDefault();
             }
-
             if (urgente != null)
             {
                 return urgente;
@@ -183,9 +177,7 @@ namespace LogicaAccesoADatos.Repos
             {
                 ret = ret.Where(e => e.EstadoEnvio.ToString().ToLower() == estado.ToLower());
             }
-
             return ret.OrderBy(e => e.Tracking).ToList();
-
         }
     }
 }

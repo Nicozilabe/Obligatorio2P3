@@ -17,9 +17,7 @@ namespace CasosDeUso.DTOs.Envio
         public string EmailCliente { get; set; }
         public double Peso { get; set; }
         public string EstadoEnvio { get; set; }
-
         public CiudadDTO Ciudad { get; set; }
-
         public DateTime FechaRegistroEnvio { get; set; }
         public IEnumerable<ComentarioEnvioDTO> Comentarios { get; set; }
         public string TipoEnvio { get; set; }
@@ -70,27 +68,17 @@ namespace CasosDeUso.DTOs.Envio
             {
                 throw new DatosInvalidosException("Direccion-Envio no válida");
             }
-
             if (FechaEntrega != null)
             {
                 if (FechaEntrega < FechaRegistroEnvio)
                 {
                     throw new DatosInvalidosException("La fecha de entrega no puede ser menor a la fecha de registro");
-
                 }
                 if(FechaEntrega > DateTime.Now)
                 {
                     throw new DatosInvalidosException("La fecha de entrega no puede ser mayor a la fecha actual");
                 }
             }
-                //if (TipoEnvio == "comun")
-                //{
-                //    Agencia.Validar();
-                //}
-                //else
-                //{
-                //    direccion.Validar();
-                //}
-            }
+        }
     }
 }

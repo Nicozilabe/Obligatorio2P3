@@ -10,7 +10,6 @@ namespace LogicaAplicacion.Mapeadores.Envios
 {
     public class MapperUbicacion
     {
-
         public static UbicacionDTO ToDTO(Ubicacion u)
         {
             //faltan validaciones
@@ -22,8 +21,5 @@ namespace LogicaAplicacion.Mapeadores.Envios
 
             return ret;
         }
-
-
-
     }
 }

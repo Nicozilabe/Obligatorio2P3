@@ -26,8 +26,6 @@ namespace LogicaAccesoADatos.EF
         public DbSet<EnvioUrgente> EnviosUrgentes { get; set; }
         public DbSet<ComentarioEnvio> Comentarios { get; set; }
 
-
-
         public EmpresaContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,7 +43,6 @@ namespace LogicaAccesoADatos.EF
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
-
             modelBuilder.Entity<AccionAdministracion>()
                 .HasOne(a => a.Afectado)
                 .WithMany()
@@ -58,13 +55,11 @@ namespace LogicaAccesoADatos.EF
                 .HasForeignKey(a => a.RealizadorId)
                 .OnDelete(DeleteBehavior.NoAction); // o .Restrict
 
-
             modelBuilder.Entity<EnvioUrgente>()
                 .HasOne(e => e.Ciudad)
                 .WithMany()
                 .HasForeignKey(e => e.CiudadId)
                 .OnDelete(DeleteBehavior.Restrict);
-
 
             modelBuilder.Entity<Agencia>()
                 .HasOne(e => e.Ciudad)
@@ -72,26 +67,17 @@ namespace LogicaAccesoADatos.EF
                 .HasForeignKey(e => e.CiudadId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
-
             modelBuilder.Entity<EnvioComun>()
                 .HasOne(e => e.Agencia)
                 .WithMany()
                 .HasForeignKey(e => e.AgenciaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            
             modelBuilder.Entity<Envio>()
                 .HasOne(e => e.EmpleadoResponable)
                 .WithMany()
                 .HasForeignKey(e => e.EmpleadoResponableId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-
-
-
         }
-
-
     }
 }

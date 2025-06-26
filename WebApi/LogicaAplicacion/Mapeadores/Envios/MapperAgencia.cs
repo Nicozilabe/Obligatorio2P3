@@ -12,9 +12,6 @@ namespace LogicaAplicacion.Mapeadores.Envios
     {
         public static AgenciaDTO ToDTO(Agencia a)
         {
-
-            //faltan validaciones
-            
             AgenciaDTO ret = new AgenciaDTO
             {
                 Id = a.Id,
@@ -23,10 +20,9 @@ namespace LogicaAplicacion.Mapeadores.Envios
                 Ubicacion = MapperUbicacion.ToDTO(a.Ubicacion),
                 Ciudad = MapperCiudad.ToDTO(a.Ciudad),
             };
-
             return ret;
-
         }
+
         public static IEnumerable<AgenciaDTO> ToListDTO(List<Agencia> agencias)
         {
            List<AgenciaDTO> ret = new List<AgenciaDTO>();
@@ -36,8 +32,5 @@ namespace LogicaAplicacion.Mapeadores.Envios
             }
             return ret;
         }
-
-        
-
     }
 }

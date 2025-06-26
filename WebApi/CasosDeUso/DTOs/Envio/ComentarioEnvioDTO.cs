@@ -14,7 +14,6 @@ namespace CasosDeUso.DTOs.Envio
         public DateTime Fecha { get; set; }
         public EmpleadoSeguroDTO Empleado { get; set; }
         public int? EmpleadoId { get; set; }
-
         public ComentarioEnvioDTO() { }
 
         public void Validar()
@@ -36,11 +35,5 @@ namespace CasosDeUso.DTOs.Envio
                 throw new DatosInvalidosException("Id Empleado no válido");
             }
         }
-
-
-        //validar comentario, fecha y empleado id
-
-
-
     }
 }

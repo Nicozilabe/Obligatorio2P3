@@ -11,11 +11,8 @@ namespace CasosDeUso.DTOs.Usuarios
 {
     public class CambioContrasenaDTO: IValidable
     {
-
         public string Email { get; set; }
-        
         public string PassVieja { get; set; }
-
         public string PassNueva { get; set; }
 
         public void Validar()

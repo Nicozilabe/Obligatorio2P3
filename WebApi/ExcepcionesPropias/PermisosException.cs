@@ -11,6 +11,5 @@ namespace ExcepcionesPropias
         public PermisosException() { }
         public PermisosException(string mensaje) : base(mensaje) { }
         public PermisosException(string mensaje, Exception interna) : base(mensaje, interna) { }
-
     }
 }

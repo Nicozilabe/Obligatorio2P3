@@ -16,6 +16,5 @@ namespace LogicaNegocio.Enums
         Durazno,
         PuntaDelEste,
         Castillos
-
     }
 }

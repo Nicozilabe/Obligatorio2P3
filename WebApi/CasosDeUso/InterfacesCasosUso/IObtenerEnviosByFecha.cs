@@ -10,7 +10,5 @@ namespace CasosDeUso.InterfacesCasosUso
     public interface IObtenerEnviosByFecha
     {
         public IEnumerable<EnvioLigthDTO> getEnviosByFecha(FiltroFechaDTO datos);
-
     }
-
 }

@@ -12,9 +12,7 @@ namespace CasosDeUso.DTOs.Usuarios
 {
     public class LoginDTO : IValidable
     {
-        
         public string? Email { get; set; }
-        
         public string? Pass { get; set; }
 
         public void Validar()

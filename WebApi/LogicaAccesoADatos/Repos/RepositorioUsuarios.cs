@@ -14,14 +14,11 @@ namespace LogicaAccesoADatos.Repos
 {
     public class RepositorioUsuarios : IRepositorioUsuarios
     {
-
         public EmpresaContext Context { get; set; }
 
         public RepositorioUsuarios(EmpresaContext context)
         {
-
             Context = context;
-
         }
 
         public void Add(Usuario obj)
@@ -31,7 +28,6 @@ namespace LogicaAccesoADatos.Repos
                 throw new DatosInvalidosException("Usuario no válido para el alta.");
             }
             obj.Validar();
-
             Usuario buscado = FindByEmail(obj.Email.Email);
 
             if (buscado != null)
@@ -83,8 +79,6 @@ namespace LogicaAccesoADatos.Repos
             }
             obj.Validar();
 
-
-
             if (aEditar.Nombre.Nombre != obj.Nombre.Nombre || aEditar.Activo != obj.Activo || aEditar.Email.Email != obj.Email.Email || aEditar.Password != obj.Password)
             {
                 if (aEditar.Email.Email != obj.Email.Email)
@@ -100,11 +94,9 @@ namespace LogicaAccesoADatos.Repos
             {
                 throw new DatosInvalidosException("No se han realizado cambios en el Usuario.");
             }
-
             Context.Entry(aEditar).State = EntityState.Detached;
             Context.Usuarios.Update(obj);
             Context.SaveChanges();
         }
-        
     }
 }

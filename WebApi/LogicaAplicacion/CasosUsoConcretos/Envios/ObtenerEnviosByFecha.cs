@@ -20,6 +20,7 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
         {
             this.repoEnvios = repoEnvios;
         }
+
         public IEnumerable<EnvioLigthDTO> getEnviosByFecha(FiltroFechaDTO datos)
         {
             IEnumerable<Envio> Envios = null;
@@ -30,16 +31,13 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
                 throw new DatosInvalidosException( "Los datos de filtro no pueden ser nulos.");
             }
             datos.Validar();
-
-             Envios = repoEnvios.FindByFecha(datos.Email, datos.FInicio, datos.FFin, datos.Estado);
+            Envios = repoEnvios.FindByFecha(datos.Email, datos.FInicio, datos.FFin, datos.Estado);
 
             if(Envios != null)
             {
                 Ret = MapperEnvio.ToListEnvioLigthDTO(Envios);
             }
-
             return Ret;
-
         }
     }
 }

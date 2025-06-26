@@ -13,12 +13,9 @@ namespace LogicaNegocio.EntidadesDominio.Acciones
 {
     public class AccionAdministracion : Accion
     {
-
         public int RealizadorId { get; set; }
         public int? AfectadoId { get; set; }
         public Empleado? Afectado { get; set; }
-
-
         public Administrador Realizador { get; set; }
         public TipoAccionAdministracion TipoAccion { get; set; }
 

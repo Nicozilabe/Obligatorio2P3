@@ -32,7 +32,6 @@ namespace LogicaNegocio.ValueObjects
             {
                 throw new DatosInvalidosException("Longitud no válida");
             }
-            
         }
     }
 }

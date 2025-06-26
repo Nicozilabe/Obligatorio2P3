@@ -43,9 +43,7 @@ namespace LogicaNegocio.ValueObjects
             if (CodigoPostal <= 0 || CodigoPostal > 99999 || CodigoPostal == null)
             {
                 throw new DatosInvalidosException("Número-Dirección Debe ser un valor entre 1 y 99999");
-            }
-           
-        }
+            }        }
 
         public override string ToString()
         {

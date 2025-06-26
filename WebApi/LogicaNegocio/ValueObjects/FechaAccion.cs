@@ -21,7 +21,6 @@ namespace LogicaNegocio.ValueObjects
             Validar();
         }
 
-
         public void Validar()
         {
             if(Fecha == null)

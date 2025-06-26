@@ -19,9 +19,9 @@ namespace LogicaAplicacion.Mapeadores.Envios
                 Calle = d.Calle,
                 Numero = d.Numero,
             };
-
             return ret;
         }
+
         public static DireccionPostal ToDireccion(DireccionDTO dto)
         {
             DireccionPostal ret = new DireccionPostal
@@ -31,7 +31,6 @@ namespace LogicaAplicacion.Mapeadores.Envios
                 CodigoPostal = dto.CodigoPostal,
             };
             return ret;
-
         }
     }
 }
