@@ -44,8 +44,24 @@
                 }
             </dd>
 
-            <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.EnvioEficiente)</dt>
-            <dd class = "col-sm-10">@(Model.EnvioEficiente ? "Sí" : "No")</dd>
+            @if (Model.TipoEnvio == "EnvioComun")
+            {
+                <dt class="col-sm-2">@Html.DisplayName("Agencia")</dt>
+                <dd class="col-sm-10">@Model.Agencia</dd>
+            }
+            else
+            {
+                <dt class="col-sm-2">@Html.DisplayName("Dirección")</dt>
+                <dd class="col-sm-10">@Model.direccion</dd>
+
+                @if (Model.FechaEntrega != null)
+                {
+                    <dt class="col-sm-2">Eficiencia</dt>
+                    <dd class="col-sm-10">
+                        @(Model.EnvioEficiente ? "El envío fue eficiente" : "El envío no fue eficiente")
+                    </dd>
+                }
+            }
         </dl>
 		@if (Model.Comentarios?.Any() == true)
 		{

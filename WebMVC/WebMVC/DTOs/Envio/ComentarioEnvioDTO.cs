@@ -13,7 +13,6 @@ namespace WebMVC.DTOs.Envio
         public DateTime Fecha { get; set; }
         public EmpleadoSeguroDTO Empleado { get; set; }
         public int? EmpleadoId { get; set; }
-
         public ComentarioEnvioDTO() { }
 
         public void Validar()
