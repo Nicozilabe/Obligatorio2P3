@@ -154,7 +154,7 @@ namespace LogicaAccesoADatos.Repos
             List<Envio> ret = new List<Envio>();
             ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(eCliente)).ToList());
             ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Cliente).Include(a => a.Ciudad).Where(a => a.Cliente.Email == new UsuarioEmail(eCliente)).ToList());
-            return ret;
+            return ret.OrderBy(e => e.FechaRegistroEnvio).ToList();
         }
 
         public IEnumerable<Envio> FindAllLightByComentario(string eCliente, string comentario)
@@ -162,12 +162,30 @@ namespace LogicaAccesoADatos.Repos
             List<Envio> ret = new List<Envio>();
             ret.AddRange(Context.EnviosComunes.Include(a => a.Agencia).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(eCliente) && a.Comentarios != null && a.Comentarios.Any(c => c.Comentario.ToLower().Contains(comentario.ToLower()))).ToList());
             ret.AddRange(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Ciudad).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(eCliente) && a.Comentarios != null && a.Comentarios.Any(c => c.Comentario.ToLower().Contains(comentario.ToLower()))).ToList());
-            return ret;
+            return ret.OrderBy(e => e.FechaRegistroEnvio).ToList();
         }
 
-        public IEnumerable<Envio> FindByFecha(string email, DateOnly? fechaDesde, DateOnly? fechaHasta, string? estado)
+        public IEnumerable<Envio> FindByFecha(string email, DateTime? fechaDesde, DateTime? fechaHasta, string? estado)
         {
-            throw new NotImplementedException();
+            IEnumerable<Envio> ret = new List<Envio>();
+            ret = ret.Concat(Context.EnviosComunes.Include(a => a.Agencia).Include(a => a.Cliente).Where(a => a.Cliente.Email == new UsuarioEmail(email)));
+            ret = ret.Concat(Context.EnviosUrgentes.Include(a => a.Direccion).Include(a => a.Cliente).Include(a => a.Ciudad).Where(a => a.Cliente.Email == new UsuarioEmail(email)));
+
+            if (fechaDesde.HasValue)
+            {
+                ret = ret.Where(e => e.FechaRegistroEnvio >= fechaDesde.Value);
+            }
+            if (fechaHasta.HasValue)
+            {
+                ret = ret.Where(e => e.FechaRegistroEnvio.Date <= fechaHasta.Value);
+            }
+            if (!string.IsNullOrEmpty(estado))
+            {
+                ret = ret.Where(e => e.EstadoEnvio.ToString().ToLower() == estado.ToLower());
+            }
+
+            return ret.OrderBy(e => e.Tracking).ToList();
+
         }
     }
 }

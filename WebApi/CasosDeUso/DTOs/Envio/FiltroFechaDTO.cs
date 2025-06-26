@@ -11,9 +11,9 @@ namespace CasosDeUso.DTOs.Envio
     public class FiltroFechaDTO:IValidable
     {
 
-        public DateOnly? FInicio { get; set; }
+        public DateTime? FInicio { get; set; }
 
-        public DateOnly? FFin { get; set; }
+        public DateTime? FFin { get; set; }
 
         public string? Estado { get; set; }
 
@@ -21,9 +21,9 @@ namespace CasosDeUso.DTOs.Envio
 
         public void Validar()
         {
-            if (FInicio == null && FFin == null && Estado == null)
+            if (FInicio == null && FFin == null)
             {
-                throw new DatosInvalidosException("Debe ingresar al menos una fecha o un estado para filtrar.");
+                throw new DatosInvalidosException("Debe ingresar al menos una fecha para filtrar.");
             }
 
             if(FFin != null && FInicio != null && FInicio < FFin)

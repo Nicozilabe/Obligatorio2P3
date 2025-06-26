@@ -15,6 +15,6 @@ namespace LogicaNegocio.InterfacesRepositorio
 
         IEnumerable<Envio> FindAllLightByComentario(string eCliente, string comentario);
 
-        IEnumerable<Envio> FindByFecha(string email,DateOnly? fechaDesde, DateOnly? fechaHasta, string? estado);
+        IEnumerable<Envio> FindByFecha(string email, DateTime? fechaDesde, DateTime? fechaHasta, string? estado);
     }
 }

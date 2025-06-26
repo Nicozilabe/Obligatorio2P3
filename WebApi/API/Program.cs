@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 
@@ -51,7 +52,10 @@ namespace API
             builder.Services.AddScoped<IObtenerEnvioByTracking, ObtenerEnvioByTracking>();
             builder.Services.AddScoped<IObtenerEnviosByEmail, ObtenerEnviosByEmail>();
             builder.Services.AddScoped<IObtenerEnviosActivos, ObtenerEnviosActivos>();
-            
+            builder.Services.AddScoped<IObtenerEnvioByComentario, ObtenerEnvioByComentario>();
+            builder.Services.AddScoped<IObtenerEnviosByFecha, ObtenerEnviosByFecha>();
+
+
 
 
 
@@ -68,6 +72,12 @@ namespace API
 
             builder.Services.AddSwaggerGen(options =>
             {
+
+                var archivo = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var ruta = Path.Combine(AppContext.BaseDirectory, archivo);
+                options.IncludeXmlComments(ruta);
+
+
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",

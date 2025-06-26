@@ -18,17 +18,29 @@ namespace API.Controllers
         IObtenerEnvioByTracking CUObtenerEnvioByTracking { get; set; }
         IObtenerEnvioByComentario CUObtenerEnvioByComentario { get; set; }
         IObtenerEnviosByEmail CUObtenerEnviosByEmail { get; set; }
+        IObtenerEnviosByFecha CUObtenerEnviosByFecha { get; set; }
 
-        public EnviosController(IObtenerEnvio cuObtenerEnvio, IObtenerEnviosActivos cUObtenerEnviosActivos, IObtenerEnvioByTracking cUObtenerEnvioByTracking, IObtenerEnvioByComentario cUObtenerEnvioByComentario, IObtenerEnviosByEmail cUObtenerEnviosByEmail)
+        public EnviosController(IObtenerEnvio cuObtenerEnvio, IObtenerEnviosActivos cUObtenerEnviosActivos, IObtenerEnvioByTracking cUObtenerEnvioByTracking, IObtenerEnvioByComentario cUObtenerEnvioByComentario, IObtenerEnviosByEmail cUObtenerEnviosByEmail, IObtenerEnviosByFecha cUObtenerEnviosByFecha)
         {
             CUObtenerEnvio = cuObtenerEnvio;
             CUObtenerEnviosActivos = cUObtenerEnviosActivos;
             CUObtenerEnvioByTracking = cUObtenerEnvioByTracking;
             CUObtenerEnvioByComentario = cUObtenerEnvioByComentario;
             CUObtenerEnviosByEmail = cUObtenerEnviosByEmail;
+            CUObtenerEnviosByFecha = cUObtenerEnviosByFecha;
         }
 
+        /// <summary>
+        /// Permite buscar envíos por su código de tracking.
+        /// </summary>
+        /// <param name="tracking">Tracking del envío a buscar.</param>
+        /// <returns>El Envío solicitado o mensaje de error</returns>
         [HttpGet("BuscarPorTracking/{tracking}")]
+        [ProducesResponseType(typeof(EnvioDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status500InternalServerError)]
+
         public IActionResult Get(int tracking)
         {
             if (tracking <= 0)
@@ -50,8 +62,19 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Permite buscar envíos por el Email de un Cliente.
+        /// </summary>
+        /// <param name="Email">Email del cliente al cual buscar sus envios.</param>
+        /// <returns>Lista de los envíos del cliente con email dado</returns>
         [HttpGet("BuscarPorCliente")]
         [Authorize(Roles = "Cliente")]
+        [ProducesResponseType(typeof(IEnumerable<EnvioLigthDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status500InternalServerError)]
         public IActionResult GetByEmail([FromQuery]string Email)
         {
             if (string.IsNullOrEmpty(Email))
@@ -81,8 +104,19 @@ namespace API.Controllers
             }
         }
 
+        /// <summary>
+        /// Permite buscar envíos con el comentario y email dado.
+        /// </summary>
+        /// <param name="datos">Email y Comentario por el cual buscar envíos.</param>
+        /// <returns>Los Envíos buscados o código de error.</returns>
         [HttpGet("BuscarPorComentario")]
         [Authorize(Roles = "Cliente")]
+        [ProducesResponseType(typeof(IEnumerable<EnvioLigthDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status500InternalServerError)]
         public IActionResult GetByComentariol([FromQuery]FiltroComentarioDTO datos)
         {
             if (datos == null)
@@ -114,8 +148,20 @@ namespace API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Permite buscar envíos por su código Id.
+        /// </summary>
+        /// <param name="id">Id del envío a buscar.</param>
+        /// <returns>El tema solicitado o mensaje de error</returns>
         [HttpGet("BuscarPorID/{id}")]
         [Authorize(Roles = "Cliente")]
+        [ProducesResponseType(typeof(EnvioDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status500InternalServerError)]
         public IActionResult GetByID(int id)
         {
             if (id <= 0)
@@ -130,6 +176,51 @@ namespace API.Controllers
                     return NotFound("El envío con id=" + id + " no existe");
                 }
                 return Ok(envio);
+            }
+            catch (DatosInvalidosException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (PermisosException ex)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocurrió un error, intente nuevamente más tarde");
+            }
+        }
+
+
+        /// <summary>
+        /// Permite buscar envíos por fecha y estado.
+        /// </summary>
+        /// <param name="filtro">Fecha de inicio, fecha fin y estado de los envíos a buscar.</param>
+        /// <returns>El tema solicitado o mensaje de error</returns>
+        [HttpGet("BuscarPorFecha")]
+        [Authorize(Roles = "Cliente")]
+        [ProducesResponseType(typeof(IEnumerable<EnvioLigthDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(String), StatusCodes.Status500InternalServerError)]
+        public IActionResult GetByFecha([FromQuery] FiltroFechaDTO filtro)
+        {
+            if (filtro == null)
+            {
+                return BadRequest("El filtro no puede ser nulo");
+            }
+
+            try
+            {
+                filtro.Validar();
+                IEnumerable<EnvioLigthDTO> envios = CUObtenerEnviosByFecha.getEnviosByFecha(filtro);
+                if (envios == null || !envios.Any())
+                {
+                    return NotFound("No se encontraron envíos para el filtro proporcionado");
+                }
+                return Ok(envios);
             }
             catch (DatosInvalidosException ex)
             {
