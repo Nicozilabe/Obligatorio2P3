@@ -34,14 +34,9 @@ namespace LogicaAplicacion.CasosUsoConcretos.Usuarios
                     {
                         throw new PermisosException("El usuario no cuenta con los permisos para iniciar sesión.");
                     }
-
                 }
-
             }
-            
-
             return ret;
         }
-
     }
 }

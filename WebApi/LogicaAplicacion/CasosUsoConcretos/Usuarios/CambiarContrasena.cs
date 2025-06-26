@@ -15,17 +15,16 @@ namespace LogicaAplicacion.CasosUsoConcretos.Usuarios
 {
     public class CambiarContrasena : ICambiarContraseña
     {
-
         public IRepositorioUsuarios Repo { get; set; }
+
         public CambiarContrasena(IRepositorioUsuarios repo)
         {
             Repo = repo;
         }
+
         public void CambiarContraseña(CambioContrasenaDTO datos)
         {
-            
             datos.Validar();
-
             if (datos.PassVieja == datos.PassNueva)
             {
                 throw new DatosInvalidosException("La contraseña nueva no puede ser igual a la anterior.");
@@ -36,17 +35,13 @@ namespace LogicaAplicacion.CasosUsoConcretos.Usuarios
             {
                 if (buscado.Password.Password == datos.PassVieja)
                 {
-
                     buscado.Password = new UsuarioPassword(datos.PassNueva);
-
                     Repo.Update(buscado);
-
                 }
                 else
                 {
                     throw new DatosInvalidosException("La contraseña actual no es correcta");
                 }
-
             }
             else
             {
