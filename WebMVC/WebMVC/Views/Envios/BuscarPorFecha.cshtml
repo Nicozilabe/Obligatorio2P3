@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebMVC.DTOs.Envio.EnvioLigthDTO>
+@{
+    ViewData["Title"] = "Buscar Envio por Fecha";
+    var estados = ViewBag.Estados as List<string> ?? new List<string>();
+    var fInicio = ViewBag.FInicio as string ?? "";
+    var fFin = ViewBag.FFin as string ?? "";
+    var estadoSelect = ViewBag.EstadoSel as string ?? "";
+}
+
+<h2>Buscar Envíos por Fecha</h2>
+<form asp-action="BuscarPorFecha" method="post" class="mb-4">
+    @Html.AntiForgeryToken()
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label for="fInicio" class="form-label">Fecha Inicio</label>
+            <input type="date" id="fInicio" name="fInicio" value="@fInicio" class="form-control" required />
+        </div>
+        <div class="col-md-3">
+            <label for="fFin" class="form-label">Fecha Fin</label>
+            <input type="date" id="fFin" name="fFin" value="@fFin" class="form-control" required />
+        </div>
+        <div class="col-md-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select id="estado" name="estado" class="form-select">
+                <option value="">Todos</option>
+                @foreach (var e in estados.Where(s => !string.IsNullOrEmpty(s)))
+                {
+                    if (estadoSelect == e)
+                    {
+                        <option value="@e" selected>@e</option>
+                    }
+                    else
+                    {
+                        <option value="@e">@e</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-3 align-self-end">
+            <button type="submit" class="btn btn-primary w-100">Buscar</button>
+        </div>
+    </div>
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+}
+else if (!Model.Any())
+{
+    <p class="text-muted mt-3">No hay envíos para ese filtro.</p>
+}
+else
+{
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.First().Tracking)</th>
+                <th>@Html.DisplayNameFor(m => m.First().FechaRegistroEnvio)</th>
+                <th>@Html.DisplayNameFor(m => m.First().EstadoEnvio)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var envio in Model)
+            {
+                <tr>
+                    <td>@envio.Tracking</td>
+                    <td>@envio.FechaRegistroEnvio.ToString("dd/MM/yyyy")</td>
+                    <td>@envio.EstadoEnvio</td>
+                    <td>
+                        @Html.ActionLink("Ver detalles", "DetallesEnvio", new { id = envio.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
