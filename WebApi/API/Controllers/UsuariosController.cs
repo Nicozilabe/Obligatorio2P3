@@ -5,6 +5,7 @@ using ExcepcionesPropias;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -68,6 +69,14 @@ namespace API.Controllers
         [Authorize(Roles = "Cliente")]
         public ActionResult CambiarContrasena([FromBody]CambioContrasenaDTO datos)
         {
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            if(email != datos.Email)
+            {
+                return BadRequest("El email del token no coincide con el email del usuario.");
+            }
+
+
             if (datos == null)
             {
                 return BadRequest("Error datos cambio contraseña.");
