@@ -18,6 +18,7 @@ namespace LogicaNegocio.ValueObjects.Usuario
         {
             Email = email;
         }
+        protected UsuarioEmail() { }
         public void Validar()
         {
             if (string.IsNullOrEmpty(Email))

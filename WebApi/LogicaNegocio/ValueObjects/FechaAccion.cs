@@ -14,7 +14,7 @@ namespace LogicaNegocio.ValueObjects
     {
         public DateTime Fecha { get; init; }
 
-        public FechaAccion() { }
+        protected FechaAccion() { }
         public FechaAccion(DateTime fecha)
         {
             this.Fecha = fecha;

@@ -19,7 +19,7 @@ namespace LogicaNegocio.ValueObjects
         public int Numero { get; init; }
         public int CodigoPostal { get; init; }
 
-        public DireccionPostal() { 
+        protected DireccionPostal() { 
             
         }
         public DireccionPostal(string calle, int numero, int cp) {

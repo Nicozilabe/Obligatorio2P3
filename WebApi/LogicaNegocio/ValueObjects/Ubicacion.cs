@@ -15,7 +15,7 @@ namespace LogicaNegocio.ValueObjects
         public double Latitud { get; init; }
         public double Longitud { get; init; }
 
-        public Ubicacion() { }
+        protected Ubicacion() { }
         public Ubicacion(double lat, double lon)
         {
             Latitud = lat;
