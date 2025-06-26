@@ -14,7 +14,6 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
 {
     public class ObtenerEnvio : IObtenerEnvio
     {
-
         IRepositorioEnvios repoEnvios { get; set; }
 
         public ObtenerEnvio(IRepositorioEnvios repoEnvios)
@@ -28,16 +27,13 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
             {
                 throw new DatosInvalidosException("El id no puede ser menor o igual a cero");
             }
-            var envio = repoEnvios.FindById(id);
 
+            var envio = repoEnvios.FindById(id);
             EnvioDTO ret = null;
             if (envio != null) {
                 ret = MapperEnvio.ToDTO(envio);
             }
-
             return ret;
-
         }
- 
     }
 }

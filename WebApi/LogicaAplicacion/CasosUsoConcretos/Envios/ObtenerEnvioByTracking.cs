@@ -13,7 +13,6 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
 {
     public class ObtenerEnvioByTracking : IObtenerEnvioByTracking
     {
-
         IRepositorioEnvios repoEnvios { get; set; }
 
         public ObtenerEnvioByTracking(IRepositorioEnvios repoEnvios)
@@ -23,7 +22,6 @@ namespace LogicaAplicacion.CasosUsoConcretos.Envios
         public EnvioDTO getByTracking(int tracking)
         {
             EnvioDTO envio = null;
-
             Envio en = repoEnvios.FindByTracking(tracking);
             if (en != null)
             {
