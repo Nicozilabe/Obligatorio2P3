@@ -24,12 +24,8 @@ namespace LogicaAplicacion.Mapeadores.Envios
         }
         public static DireccionPostal ToDireccion(DireccionDTO dto)
         {
-            DireccionPostal ret = new DireccionPostal
-            {
-                Calle = dto.Calle,
-                Numero = dto.Numero,
-                CodigoPostal = dto.CodigoPostal,
-            };
+            DireccionPostal ret = new DireccionPostal(dto.Calle, dto.Numero, dto.CodigoPostal);
+            
             return ret;
 
         }
